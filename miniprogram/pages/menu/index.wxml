@@ -1,0 +1,33 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="banner">占位</view>
+  <view class="menu-container">
+    <view class="menu-left">
+      <view wx:for="{{typeList}}" wx:for-item="item">
+        <view class="menu-left-item {{activeIndex === index ? 'active':''}}" bind:tap="clickType" data-index="{{index}}">{{item}}</view>
+      </view>
+    </view>
+    <view class="menu-right">
+      <view class="menu-right-item" wx:for="{{menuData[typeList[activeIndex]]}}" wx:for-item="item">
+        <image class="menu-right-img" src="{{item.img}}"></image>
+        <view class="menu-right-item-content">
+          <view class="menu-right-name">
+            {{item.name}}
+          </view>
+          <view class="menu-right-desc">
+            {{item.desc}}
+          </view>
+        </view>
+        <view class="add_minus">
+          <view class="minus" wx-if="{{item.count}}" data-id="{{item.name}}" data-type="{{item.type}}" bind:tap="minus">-</view>
+          <view class="count" wx-if="{{item.count}}">{{item.count}}</view>
+          <view class="add" data-id="{{item.name}}" data-type="{{item.type}}" bind:tap="add">+</view>
+
+
+        </view>
+
+
+      </view>
+    </view>
+  </view>
+</view>
