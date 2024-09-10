@@ -79,3 +79,8 @@
   background-color: #fff;
 }
 
+.orderedBtn {
+  position: absolute;
+  left: 24rpx;
+  bottom:12rpx;
+}

@@ -30,4 +30,20 @@
       </view>
     </view>
   </view>
+  <button class="orderedBtn" bind:tap="popup" data-position="bottom">菜单</button>
+
+  <page-container 
+  show="{{show}}"
+  round="{{round}}"
+  overlay="{{overlay}}"
+  duration="{{duration}}"
+  position="{{position}}"
+  close-on-slide-down="{{false}}"
+  custom-style="{{customStyle}}"
+  overlay-style="{{overlayStyle}}"
+>
+  <view class="detail-page">
+    <view wx:for="{{orderList}}" wx:for-item="item">{{item.name}}</view>
+  </view>
+</page-container>
 </view>
