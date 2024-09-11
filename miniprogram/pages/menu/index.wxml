@@ -1,6 +1,10 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="banner">占位</view>
+  <view class="banner">
+  
+    <button bind:tap="createDish">添加菜品</button>
+  
+  </view>
   <view class="menu-container">
     <view class="menu-left">
       <view wx:for="{{typeList}}" wx:for-item="item">

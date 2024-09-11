@@ -34,4 +34,15 @@ Page({
       url: '/pages/goods-list/index',
     })
   },
+  createDish() {
+    wx.navigateTo({
+      url: '/pages/createDish/index',
+    })
+  },
+
+  help() {
+    wx.navigateTo({
+      url: '/pages/help/index',
+    })
+  }
 });

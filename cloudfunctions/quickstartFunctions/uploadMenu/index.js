@@ -1,0 +1,14 @@
+const cloud = require('wx-server-sdk');
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
+const db = cloud.database();
+exports.main = async (event, context) => {
+  const param = event.param;
+  const { menu } = param;
+  console.log('menu22',menu);
+  db.collection('menus').where({menuId:'123'}).update({
+    data: {
+      menu
+    },
+}).then(res => {console.log('updata res',res)})
+}
+

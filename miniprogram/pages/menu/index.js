@@ -23,8 +23,10 @@ Page({
   },
 
   async onLoad() {
+    console.log('33');
     const data = await fetchMenu();
-    const menuData = data.result.dataList;
+    console.log('22',data);
+    const menuData = data.result;
     const menuMap = {};
     menuData.forEach(item => {
       const type = item.type;
@@ -40,7 +42,11 @@ Page({
       typeList
     })
   },
-
+  createDish() {
+    wx.navigateTo({
+      url: '/pages/createDish/index',
+    })
+  },
   clickType(e) {
     const index = e.currentTarget.dataset.index;
     console.log('activeIndex', index);
