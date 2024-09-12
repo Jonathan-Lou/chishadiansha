@@ -23,6 +23,11 @@ page {
   border-radius: 200rpx;
   text-align: center;
 }
+
+.photoImg {
+  height:100%;
+  width:100%;
+}
 .name {
   margin-bottom: 24rpx;
 }

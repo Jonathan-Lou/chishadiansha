@@ -2,8 +2,7 @@
 <view class="container">
   <view class="photo" bind:tap="takePhoto">
     <view wx:if="{{!photoSrc}}" class="takePhoto">我是相机</view>
-    <image wx:if="{{photoSrc}}" name="photo" src="{{photoSrc}}"></image>
-    <image name="photo" src="cloud://chishane-2gsirlz919069514.6368-chishane-2gsirlz919069514-1308342340/example.png"></image>
+    <image wx:if="{{photoSrc}}" class="photoImg" name="photo" mode="aspectFit" src="{{photoSrc}}"></image>
     
   </view>
   <form catchsubmit="formSubmit" catchreset="formReset">

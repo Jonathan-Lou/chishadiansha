@@ -13,7 +13,7 @@
     </view>
     <view class="menu-right">
       <view class="menu-right-item" wx:for="{{menuData[typeList[activeIndex]]}}" wx:for-item="item">
-        <image class="menu-right-img" src="{{item.img}}"></image>
+        <image class="menu-right-img" mode="aspectFit" src="{{item.img}}"></image>
         <view class="menu-right-item-content">
           <view class="menu-right-name">
             {{item.name}}
