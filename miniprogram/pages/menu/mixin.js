@@ -1,8 +1,8 @@
 
-const fetchMenu = async () => {
+const fetchMenu = async (id) => {
   const res = await wx.cloud.callFunction({
     name:'quickstartFunctions',
-    data:{ type: 'fetchMenu' }
+    data:{ type: 'fetchMenu',param:{id} }
   })
   return res;
 }

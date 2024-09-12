@@ -3,7 +3,7 @@
   <view class="main">
     <view class="title font_title_1">首页</view>
     <view class="sub_title">
-      <button bind:tap="createDish">添加菜品</button>
+      <button bind:tap="createMenu">创建菜单</button>
     </view>
   </view>
   <view class="help" bind:tap="help">help</view>

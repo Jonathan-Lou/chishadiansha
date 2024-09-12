@@ -14,26 +14,16 @@ Page({
     knowledgePoints: QuickStartPoints,
     steps: QuickStartSteps,
     photoSrc: '',
-    openId: '',
     menuData:[]
   },
   async onLoad() {
     console.log('onload');
-    wx.cloud.callFunction({
-      name: 'quickstartFunctions',
-      data: {
-        type: 'getOpenId'
-      }
-    }).then(res => {
-      this.setData({
-        openId: res.result.openid
-      })
-    });
-    console.log('onload2');
-    const fetchData =  await fetchMenu();
+    const app = getApp();
+    const openid = app.globalData.openid;
+    const fetchData =  await fetchMenu(`${openid}menu`);
     console.log('fetchData',fetchData);
 
-    const menuData  = fetchData.result;
+    const menuData  = fetchData.result || [];
     this.setData({menuData})
     console.log('menuData',menuData);
   },
@@ -79,7 +69,12 @@ Page({
   async formSubmit(e) {
     console.log('eee', e);
     const {name,type} = e.detail.value;
-    const cloudPath = `${this.data.openId}/images/menu-${Date.now()}.png`
+    const app = getApp();
+    const openid = app.globalData.openid;
+    const cloudPath = `${openid}/images/menu-${Date.now()}.png`
+console.log('cloudPath',cloudPath);
+console.log('this.data.photoSrc',this.data.photoSrc);
+   
     wx.cloud.uploadFile({
       cloudPath, // 上传至云端的路径
       filePath: this.data.photoSrc, // 小程序临时文件路径
@@ -94,10 +89,11 @@ Page({
         console.log('menu',menu);
         const result = await wx.cloud.callFunction({
           name:'quickstartFunctions',
-          data:{ type: 'uploadMenu',param:{menu} }
+          data:{ type: 'uploadMenu',param:{menu,id:`${openid}menu`} }
         });
         console.log('result',result);
-    wx.navigateBack()
+        app.globalData.menuOnShow = true;
+        wx.navigateBack()
 
 
       },

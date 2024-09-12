@@ -3,12 +3,15 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 
 exports.main = async (event, context) => {
-  const result =  await db.collection('menus').where({ menuId : '123'}).get().then( res => {
+  const param = event.param;
+  const { id } = param;
+  console.log('ididid',id);
+  const result =  await db.collection('menus').doc(id).get().then( res => {
     console.log('res11',res);
     return res;
   });
   console.log('datadata',result);
-  return result.data[0].menu
+  return result?.data?.menu
   // return {
   //   dataList: [
   //     { type: '蔬菜', name: '清炒时蔬', desc: '这是一段备注',img:'https://img.88tph.com/production/20180629/12591610-1.jpg%21/watermark/url/L3BhdGgvbG9nby5wbmc/align/center' },

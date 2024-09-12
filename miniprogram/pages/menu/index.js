@@ -15,20 +15,23 @@ Page({
     menuData: null,
     typeList: [],
     activeIndex: 0,
-    position:null,
+    position: null,
     show: false,
-    customStyle:null,
-    duration:1000,
-    orderList:[]
+    customStyle: null,
+    duration: 1000,
+    orderList: []
   },
 
-  async onLoad() {
+  async fetchData() {
     console.log('33');
-    const data = await fetchMenu();
-    console.log('22',data);
+    const app = getApp();
+    const openid = app.globalData.openid;
+    console.log('menu openid--', openid);
+    const data = await fetchMenu(`${openid}menu`);
+    console.log('22', data);
     const menuData = data.result;
     const menuMap = {};
-    menuData.forEach(item => {
+    menuData?.forEach(item => {
       const type = item.type;
       if (!menuMap[type]) {
         menuMap[type] = [];
@@ -41,6 +44,20 @@ Page({
       menuData: menuMap,
       typeList
     })
+  },
+
+  async onLoad() {
+    await this.fetchData();
+  },
+
+  async onShow(e) {
+    const app = getApp();
+    console.log('app.globalData.menuOnShow',app.globalData.menuOnShow);
+    if (app.globalData.menuOnShow) {
+      await this.fetchData();
+      app.globalData.menuOnShow = false;
+    }
+    console.log('onShow', e);
   },
   createDish() {
     wx.navigateTo({
@@ -69,15 +86,15 @@ Page({
       item.count++;
     };
     const addName = item.name;
-    const orderList =this.data.orderList;
-    console.log('addName',addName);
-    console.log('index',orderList.indexOf(item => item.name === addName));
+    const orderList = this.data.orderList;
+    console.log('addName', addName);
+    console.log('index', orderList.indexOf(item => item.name === addName));
 
-    if(!orderList.some(item => item.name === addName) ) {
+    if (!orderList.some(item => item.name === addName)) {
       orderList.push(item);
     }
-    console.log('orderList',orderList);
-    
+    console.log('orderList', orderList);
+
     this.setData({
       menuData,
       orderList
@@ -101,11 +118,11 @@ Page({
       item.count--;
     }
     let orderList = this.data.orderList;
-    if(!item.count) {
+    if (!item.count) {
       const deleteName = item.name;
-       orderList = orderList.filter(item => item.name !== deleteName)
+      orderList = orderList.filter(item => item.name !== deleteName)
     }
-    console.log('orderList',orderList);
+    console.log('orderList', orderList);
     this.setData({
       menuData,
       orderList
@@ -116,10 +133,10 @@ Page({
     const position = e.currentTarget.dataset.position
     let customStyle = ''
     let duration = this.data.duration
-    switch(position) {
+    switch (position) {
       case 'top':
-      case 'bottom': 
-    customStyle = 'height: 50%;'
+      case 'bottom':
+        customStyle = 'height: 50%;'
         break
       case 'right':
         break

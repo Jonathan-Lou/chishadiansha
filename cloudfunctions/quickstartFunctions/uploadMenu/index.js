@@ -3,9 +3,9 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 exports.main = async (event, context) => {
   const param = event.param;
-  const { menu } = param;
+  const { menu,id } = param;
   console.log('menu22',menu);
-  db.collection('menus').where({menuId:'123'}).update({
+  db.collection('menus').doc(id).update({
     data: {
       menu
     },
