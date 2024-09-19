@@ -1,0 +1,16 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="photo" bind:tap="takePhoto">
+    <view wx:if="{{!photoSrc}}" class="takePhoto">我是相机</view>
+    <image wx:if="{{photoSrc}}" class="photoImg" name="photo" mode="aspectFit" src="{{photoSrc}}"></image>
+  </view>
+  <form bindsubmit="formSubmit" catchreset="formReset">
+  <view class="name">
+    菜品名称：<input class="input-name" name="name" value="{{dishData.name}}" />
+  </view>
+  <view class="type">
+    菜品类型：<input class="input-type" name="type" value="{{dishData.type}}" />
+  </view>
+  <button style="margin: 30rpx 0" type="primary" formType="submit">确认修改</button>
+  </form>
+</view>

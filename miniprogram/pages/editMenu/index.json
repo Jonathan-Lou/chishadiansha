@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "编辑菜单",
+  "usingComponents": {
+    "menu-component":"/components/menuComponent/index"
+  },
+  "navigationBarBackgroundColor": "#fff"
+}

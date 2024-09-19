@@ -1,0 +1,34 @@
+  <view class="menu-container">
+      <view class="menu-left">
+        <view wx:for="{{typeList}}" wx:for-item="item">
+          <view class="menu-left-item {{activeIndex === index ? 'active':''}}" bind:tap="clickType" data-index="{{index}}">{{item}}</view>
+        </view>
+      </view>
+      <view class="menu-right">
+        <view class="typeName">{{typeList[activeIndex]}}</view>
+        <view class="menu-right-item" wx:for="{{menuData[typeList[activeIndex]]}}" wx:for-item="item">
+          <image class="menu-right-img" mode="aspectFill" src="{{item.img}}"></image>
+          <view class="menu-right-item-content">
+            <view class="menu-right-name">
+              {{item.name}}
+            </view>
+            <view class="menu-right-type">
+              {{item.type}}
+            </view>
+            <view class="menu-right-desc">
+              {{item.desc}}
+            </view>
+          </view>
+          <view wx:if="{{type === 'share'}}" class="add_minus">
+            <view class="minus" wx-if="{{item.count}}" data-id="{{item.name}}" data-type="{{item.type}}" bind:tap="minus">-</view>
+            <view class="count" wx-if="{{item.count}}">{{item.count}}</view>
+            <view class="add" data-id="{{item.name}}" data-type="{{item.type}}" bind:tap="add">+</view>
+          </view>
+          <view wx:if="{{type === 'edit'}}" class="actions">
+            <button class="edit" size="mini" plain bind:tap="edit" data-dish-id="{{item.dishId}}">编辑</button>
+            <button class="delete" size="mini" plain bind:tap="delete" data-dish-id="{{item.dishId}}">删除</button>
+          </view>
+
+        </view>
+      </view>
+    </view>

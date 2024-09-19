@@ -1,11 +1,38 @@
 <!--index.wxml-->
 <view class="container">
   <view class="main">
-    <view class="title font_title_1">首页</view>
-    <view class="sub_title">
-      <button bind:tap="createMenu">创建菜单</button>
+    <view class="header">
+      <view class="banner">
+        <view class="banner-content">
+          <view class="banner-title">点啥吃啥
+            <view class="banner-tip">私家厨房线上服务</view>
+          </view>
+        </view>
+        <!-- <view class="banner-btn">登录</view> -->
+      </view>
+    </view>
+    <view class="body">
+      <view class="floor">
+        <view class="floor-content" bind:tap="goOrder">
+          <view class="floor-title">我要点菜</view>
+          <view class="floor-subTitle">在线点，回家吃</view>
+          <view class="floor-img"></view>
+        </view>
+        <view class="floor-content" bind:tap="viewMenu">
+          <view class="floor-title">我的菜单</view>
+          <view class="floor-subTitle">上传自家菜单</view>
+          <view class="floor-img"></view>
+        </view>
+      </view>
+      <view class="floor">
+        <view class="floor-content" bind:tap="choose">
+          <view class="floor-title">今天吃啥</view>
+          <view class="floor-subTitle">帮你做这个艰难的决定</view>
+          <view class="floor-img"></view>
+        </view>
+      </view>
+
     </view>
   </view>
-  <view class="help" bind:tap="help">help</view>
 
 </view>

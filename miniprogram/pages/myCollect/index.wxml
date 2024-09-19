@@ -1,0 +1,4 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="empty">还没有小伙伴给你分享菜单</view>
+</view>

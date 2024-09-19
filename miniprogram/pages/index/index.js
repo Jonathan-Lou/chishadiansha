@@ -1,11 +1,6 @@
 const { envList } = require("../../envList");
-const { QuickStartPoints, QuickStartSteps } = require("./constants");
-
-
 Page({
   data: {
-    knowledgePoints: QuickStartPoints,
-    steps: QuickStartSteps,
   },
 
   async onLoad() {
@@ -22,45 +17,21 @@ Page({
     console.log('app.globalData.openid',app.globalData.openid);
   },
 
-  copyCode(e) {
-    const code = e.target?.dataset?.code || '';
-    wx.setClipboardData({
-      data: code,
-      success: () => {
-        wx.showToast({
-          title: '已复制',
-        })
-      },
-      fail: (err) => {
-        console.error('复制失败-----', err);
-      }
-    })
-  },
-
-  discoverCloud() {
-    wx.switchTab({
-      url: '/pages/examples/index',
-    })
-  },
-
-  gotoGoodsListPage() {
+   goOrder() {
     wx.navigateTo({
-      url: '/pages/goods-list/index',
+      url: '/pages/myCollect/index',
     })
-  },
-  async createMenu() {
-    const app = getApp();
-    const openid = app.globalData.openid;
-    console.log('openid',openid);
-    const result = await wx.cloud.callFunction({
-      name:'quickstartFunctions',
-      data:{ type: 'createMenu',param:{openid,menuName:'menu'} }
-    });
   },
 
-  help() {
+  viewMenu() {
     wx.navigateTo({
-      url: '/pages/help/index',
+      url: '/pages/myMenu/index',
     })
-  }
+  },
+  choose() {
+    wx.showModal({
+      title: '敬请期待',
+      content: '功能研发中',
+    })
+  },
 });

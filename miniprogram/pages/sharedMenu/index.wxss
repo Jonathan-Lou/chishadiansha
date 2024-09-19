@@ -1,0 +1,102 @@
+/**index.wxss**/
+.container {
+  position: relative;
+  height: 100vh;
+}
+
+.title {
+  margin-bottom: 24rpx;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  padding: 28rpx 32rpx 28rpx 16rpx;
+  background-color: #f6f4f0;
+}
+
+
+.collectIcon {
+  width:32rpx;
+  height:32rpx;
+  margin-right: 8rpx;
+}
+
+.dish {
+  display: flex;
+}
+
+.img {
+  overflow: hidden;
+  width: 300rpx;
+  height:300rpx;
+  border-radius: 100rpx;
+}
+.dishContent {
+  display: flex;
+  align-items: center;
+}
+.dishName {
+  margin-right: 12rpx;
+}
+
+.createBtn {
+  position: absolute;
+  left: 50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+}
+
+.bottom {
+  position: absolute;
+  bottom: 0;
+  box-sizing: border-box;
+  padding:0 14rpx 100rpx 44rpx ;
+  display: flex;
+  justify-content: space-between;
+  height: 168rpx;
+  width: 100%;
+}
+
+.cart {
+  position: relative;
+}
+
+.cart image {
+  height:64rpx;
+  width:64rpx;
+  margin-top: 24rpx;
+}
+
+.orderCount {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 36rpx;
+  height: 36rpx;
+  box-sizing: border-box;
+  border-radius: 36rpx;
+  text-align: center;
+  background-color: #ffd400;
+}
+
+.submitActive {
+  box-sizing: border-box;
+  height: 88rpx !important;
+  width: 212rpx !important;
+  border: 0 !important;
+  margin: 0 !important;
+  border-radius: 140rpx;
+  background-color: #382600 !important;
+  color: #fff !important;
+}
+
+.noOrder {
+  box-sizing: border-box;
+  height: 88rpx;
+  width: 212rpx;
+  border-radius: 140rpx;
+  background-color: #999 !important;
+  text-align: center;
+  line-height: 88rpx;
+}

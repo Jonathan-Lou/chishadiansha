@@ -5,6 +5,7 @@ const {
   QuickStartPoints,
   QuickStartSteps
 } = require("./constants");
+import { getOpenId } from '../../common/index';
 import {
   fetchMenu
 } from './mixin'
@@ -14,18 +15,18 @@ Page({
     knowledgePoints: QuickStartPoints,
     steps: QuickStartSteps,
     photoSrc: '',
-    menuData:[]
-  },
-  async onLoad() {
-    console.log('onload');
-    const app = getApp();
-    const openid = app.globalData.openid;
-    const fetchData =  await fetchMenu(`${openid}menu`);
-    console.log('fetchData',fetchData);
+    menuData:[],
+    menuId:''
 
-    const menuData  = fetchData.result || [];
-    this.setData({menuData})
-    console.log('menuData',menuData);
+  },
+  async onLoad(e) {
+    console.log('eeeeee',e);
+    const menuId = e.menuId;
+    this.setData({menuId})
+   
+  },
+
+  onShow(e) {
   },
 
   takePhoto() {
@@ -39,9 +40,6 @@ Page({
         this.setData({
           photoSrc: res.tempFiles[0].tempFilePath
         })
-        console.log('res', res);
-        console.log(res.tempFiles[0].tempFilePath)
-        console.log(res.tempFiles[0].size)
       }
     })
   },
@@ -69,44 +67,38 @@ Page({
   async formSubmit(e) {
     console.log('eee', e);
     const {name,type} = e.detail.value;
-    const app = getApp();
-    const openid = app.globalData.openid;
+    if(!this.data.photoSrc) {
+      wx.showToast({
+        title: '照片未上传',
+        icon:'error'
+      });
+    return;
+    };
+    if(!name || !type ) {
+      wx.showToast({
+        title: '菜品名称/类型未填写',
+        icon:'error'
+      })
+      return;
+    }
+    const openid = getOpenId();
     const cloudPath = `${openid}/images/menu-${Date.now()}.png`
-console.log('cloudPath',cloudPath);
-console.log('this.data.photoSrc',this.data.photoSrc);
-   
     wx.cloud.uploadFile({
       cloudPath, // 上传至云端的路径
       filePath: this.data.photoSrc, // 小程序临时文件路径
       success: async (res) => {
         // 返回文件 ID
-        console.log('fileID',res.fileID);
-        const menu = this.data.menuData;
-        const item = {name,type,img:res.fileID};
-        menu.push(item);
-        console.log('item',item);
-
-        console.log('menu',menu);
         const result = await wx.cloud.callFunction({
           name:'quickstartFunctions',
-          data:{ type: 'uploadMenu',param:{menu,id:`${openid}menu`} }
+          data:{ type: 'createDish',param:{menuId:this.data.menuId,name,type,img:res.fileID} }
         });
         console.log('result',result);
-        app.globalData.menuOnShow = true;
+        const app = getApp();
+       app.globalData.menuOnShow = true;
         wx.navigateBack()
-
-
       },
       fail: console.error
     });
-    // wx.cloud.downloadFile({
-    //   fileID: 'cloud://chishane-2gsirlz919069514.6368-chishane-2gsirlz919069514-1308342340/example.png', // 文件 ID
-    //   success: res => {
-    //     // 返回临时文件路径
-    //     console.log('tempFilePath', res.tempFilePath)
-    //   },
-    //   fail: console.error
-    // })
 
   }
 

@@ -1,0 +1,9 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="main">
+   <view>已收藏菜单</view>
+   <view>您还未收藏菜单哦</view>
+  </view>
+  <button>邀请他人分享菜单</button>
+
+</view>

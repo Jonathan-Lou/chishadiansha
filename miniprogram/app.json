@@ -1,30 +1,27 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/menu/index",
+    "pages/sharedMenu/index",
     "pages/createDish/index",
+    "pages/orderList/index",
+    "pages/createMenu/index",
+    "pages/menuList/index",
+    "pages/myCollect/index",
+    "pages/myMenu/index",
+    "pages/editMenu/index",
+    "pages/editDish/index",
     "pages/help/index",
     "pages/goods-list/index",
-    "pages/examples/index",
     "pages/user-center/index",
-    "pages/exampleDetail/index",
     "pages/deployService/index",
-    "pages/updateRecord/index",
-    "pages/updateRecordResult/index",
-    "pages/updateRecordSuccess/index",
-    "pages/sumRecord/index",
-    "pages/sumRecordResult/index",
     "pages/web/index",
-    "pages/cloudbaseModuleDetail/index",
-    "pages/cloudbaseModuleInstallTips/index",
-    "pages/cloudbaseModuleGuide/index",
     "pages/business/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarTitleText": "点啥吃啥",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",
@@ -42,8 +39,8 @@
         "selectedIconPath": "images/icons/home-active.png"
       },
       {
-        "pagePath": "pages/menu/index",
-        "text": "菜单",
+        "pagePath": "pages/orderList/index",
+        "text": "订单",
         "iconPath": "images/icons/home.png",
         "selectedIconPath": "images/icons/home-active.png"
       },

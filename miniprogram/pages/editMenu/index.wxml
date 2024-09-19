@@ -1,0 +1,6 @@
+<!--index.wxml-->
+<view class="container">
+  <button bind:tap="createDish">添加菜品</button>
+  <menu-component menuData="{{menuData}}" typeList="{{typeList}}" type="edit" bind:updateMenuData="updateMenuData"></menu-component>
+  <button class="finishBtn" bind:tap="finish">完成</button>
+</view>

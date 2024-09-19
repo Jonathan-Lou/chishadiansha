@@ -1,0 +1,116 @@
+.menu-container {
+  display: flex;
+  height: calc(100% - 500rpx);
+  width: 100%;
+}
+
+.menu-left {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width:180rpx;
+  background-color:#f6f4f0;
+}
+
+.menu-left-item {
+  box-sizing: border-box;
+  height:88 rpx;
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+
+.menu-right {
+  flex:1;
+  overflow: scroll;
+  margin-left: 16rpx;
+}
+.typeName {
+  box-sizing: border-box;
+  height:88 rpx;
+  padding: 40rpx 0;
+}
+.menu-right-item {
+  position: relative;
+  display: flex;
+  width: 100%;
+  padding:12px 0;
+  margin-bottom: 16rpx;
+}
+
+.menu-right-img {
+  width:192rpx;
+  height:192rpx;
+  border-radius: 12rpx;
+}
+
+.menu-right-item-content {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20rpx;
+}
+
+.menu-right-name {
+  margin: 16rpx 0;
+  font-weight: bold;
+}
+
+.menu-right-type {
+  color: #888;
+}
+.add_minus {
+  position: absolute;
+  display: flex;
+  right: 44rpx;
+  bottom: 20rpx;
+}
+
+.minus {
+  box-sizing: border-box;
+  width: 48rpx;
+  height:48rpx;
+  border: 2rpx solid #000;
+  border-radius: 44rpx;
+  text-align: center;
+  line-height: 44rpx;
+}
+
+.count {
+  padding:0 10rpx;
+  width: 40rpx;
+  text-align: center;
+}
+.add {
+  box-sizing: border-box;
+  width: 48rpx;
+  height:48rpx;
+  text-align: center;
+  border-radius: 48rpx;
+  background-color: #000;
+  color: #fff;
+
+}
+
+.actions {
+  position: absolute;
+  display: flex;
+  top:50%;
+   right:10%;
+  transform: translateY(-50%)
+}
+
+.actions button {
+  border-radius: 24rpx;
+  font-size: 24rpx !important;
+  margin: 0 6rpx;
+}
+
+.active {
+  background-color: #fff;
+}
+
+.orderedBtn {
+  position: absolute;
+  left: 24rpx;
+  bottom:12rpx;
+}
