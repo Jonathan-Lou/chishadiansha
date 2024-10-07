@@ -34,6 +34,7 @@ Page({
       count: 1,
       mediaType: ['image', 'video'],
       sourceType: ['album', 'camera'],
+      sizeType:['compressed'],
       maxDuration: 30,
       camera: 'back',
       success: (res) => {

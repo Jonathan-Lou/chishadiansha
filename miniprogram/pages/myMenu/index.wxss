@@ -11,7 +11,7 @@
   height: 1000rpx;
 }
 .menus {
-  height: 600rpx;
+  max-height: 600rpx;
   overflow: scroll;
 }
 .menu {
@@ -43,10 +43,10 @@
 }
 
 .createMenuView {
-  margin-top: 24rpx;
+  margin: 48rpx 0;
   background-color:antiquewhite !important;
 }
-.empty {
-  margin-top: 200rpx;
+.noMenus {
+  margin-top: 20rpx;
   text-align: center;
 }

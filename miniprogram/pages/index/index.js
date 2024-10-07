@@ -17,7 +17,7 @@ Page({
     console.log('app.globalData.openid',app.globalData.openid);
   },
 
-   goOrder() {
+   goCollection() {
     wx.navigateTo({
       url: '/pages/myCollect/index',
     })

@@ -1,0 +1,10 @@
+<view >
+      <view class="menu" wx:for="{{menuList}}" wx:for-item="item">
+        <view class="name">{{item.name}}</view>
+        <view class="actions">
+          <button class="share" size="mini" plain bind:tap="share" open-type="share" data-menu-id="{{item.menuId}}" data-menu-name="{{item.name}}" >分享</button>
+          <button class="edit" size="mini" plain bind:tap="edit" data-menu-id="{{item.menuId}}">编辑</button>
+          <button class="delete" size="mini" plain bind:tap="delete" data-menu-id="{{item.menuId}}">删除</button>
+        </view>
+      </view>
+    </view>

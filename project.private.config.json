@@ -9,7 +9,7 @@
         {
           "name": "pages/sharedMenu/index?sharedId=test",
           "pathName": "pages/sharedMenu/index",
-          "query": "menuId=omutz5T5tYcji801G0unZGUixxMI中秋菜谱&sharedId=omutz5T5tYcji801G0unZGUixxMI中秋菜谱1726752885205",
+          "query": "menuId=omutz5T5tYcji801G0unZGUixxMI中秋菜谱&sharedId=omutz5T5tYcji801G0unZGUixxMI中秋菜谱1726984029205&menuName=中秋菜谱",
           "launchMode": "default",
           "scene": null
         },

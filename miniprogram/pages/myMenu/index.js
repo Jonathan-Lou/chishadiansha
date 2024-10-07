@@ -1,25 +1,28 @@
 const {
   envList
 } = require("../../envList");
-import { getOpenId } from '../../common/index';
-import { deleteMenu,fetchMenuList,createSharedMenu } from '../../fetch/index';
+import { getOpenId,userRegister } from '../../common/index';
+import { deleteMenu,fetchMenuList,createSharedMenu,fetchUser } from '../../fetch/index';
+
 
 Page({
   data: {
     menus:null,
     menuList:[],
     loading:true,
+  collectMenu:[],
   },
   sharedId:'',
   sharedMenuId:'',
   async onLoad() {
-    const menuList =await this.getMenuList();
-    this.setData({ menuList,loading:false })
+    const [menuList,collectMenu] = await Promise.all([this.getMenuList(),this.getCollectList()]);
+    console.log('menuList1',menuList);
+    this.setData({ collectMenu,menuList,loading:false })
   },
 
   async onShow() {
-    const menuList = await this.getMenuList();
-    this.setData({menuList,loading:false})
+    const [menuList,collectMenu] = await Promise.all([this.getMenuList(),this.getCollectList()]);
+    this.setData({menuList,collectMenu,loading:false})
   },
 
   async getMenuList() {
@@ -28,6 +31,21 @@ Page({
     const menuList = menuListData.result.data;
     console.log('menuList',menuList);
     return menuList;
+  },
+
+  async getCollectList() {
+    const openId = getOpenId();
+    console.log('openId',openId);
+    const user = await fetchUser(openId);
+    let collectMenu;
+    if(!user.result) {
+      userRegister(openId);
+    } else {
+      console.log('user.result',user.result);
+       collectMenu = user.result.data.userCollection;
+      console.log('collectMenu',collectMenu);
+    }
+    return collectMenu;
   },
 
   createMenu() {
@@ -97,9 +115,12 @@ Page({
     console.log('eeee',e);
     const sharedMenuId = e.currentTarget.dataset.menuId;
     const sharedId = sharedMenuId + Date.now();
+    const menuName = e.currentTarget.dataset.menuName;
+
     console.log('sharedId1',sharedId);
     this.sharedId = sharedId;
     this.sharedMenuId = sharedMenuId;
+    this.menuName = menuName;
     const result  = await createSharedMenu(sharedId);
     console.log('result');
   },
@@ -125,8 +146,15 @@ Page({
 
     return {
       title: '吃啥点啥',
-      path: `/pages/sharedMenu/index?menuId=${this.sharedMenuId}&sharedId=${this.sharedId}`,
+      path: `/pages/sharedMenu/index?menuId=${this.sharedMenuId}&sharedId=${this.sharedId}&menuName=${this.menuName}`,
     };
   },
+
+  viewMenu(e) {
+    const menuId = e.currentTarget.dataset.menuId;
+    wx.navigateTo({
+      url: `/pages/order/index?menuId=${menuId}&menuName=${this.menuName}`,
+    })
+  }
 
 });

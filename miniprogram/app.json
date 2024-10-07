@@ -6,6 +6,8 @@
     "pages/orderList/index",
     "pages/createMenu/index",
     "pages/menuList/index",
+    "pages/order/index",
+    "pages/orderDetail/index",
     "pages/myCollect/index",
     "pages/myMenu/index",
     "pages/editMenu/index",

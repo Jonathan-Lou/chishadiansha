@@ -12,25 +12,28 @@
       </view>
     </view>
     <view class="body">
+        <view class="enterMenu" bind:tap="viewMenu">
+          <view class="title">进入菜单</view>
+        </view>
       <view class="floor">
-        <view class="floor-content" bind:tap="goOrder">
+        <!-- <view class="floor-content" bind:tap="goCollection">
           <view class="floor-title">我要点菜</view>
           <view class="floor-subTitle">在线点，回家吃</view>
           <view class="floor-img"></view>
-        </view>
-        <view class="floor-content" bind:tap="viewMenu">
+        </view> -->
+        <!-- <view class="floor-content" bind:tap="viewMenu">
           <view class="floor-title">我的菜单</view>
           <view class="floor-subTitle">上传自家菜单</view>
           <view class="floor-img"></view>
-        </view>
+        </view> -->
       </view>
-      <view class="floor">
+      <!-- <view class="floor">
         <view class="floor-content" bind:tap="choose">
           <view class="floor-title">今天吃啥</view>
           <view class="floor-subTitle">帮你做这个艰难的决定</view>
           <view class="floor-img"></view>
         </view>
-      </view>
+      </view> -->
 
     </view>
   </view>

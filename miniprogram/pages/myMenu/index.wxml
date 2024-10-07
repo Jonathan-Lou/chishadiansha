@@ -4,16 +4,29 @@
   <view class="content" wx:else>
     <view class="title">已经创建的菜单</view>
     <view class="menus" wx:if="{{menuList.length}}">
-      <view class="menu" wx:for="{{menuList}}" wx:for-item="item">
+      <view class="menu"  wx:for="{{menuList}}" wx:for-item="item">
         <view class="name">{{item.name}}</view>
         <view class="actions">
-          <button class="share" size="mini" plain bind:tap="share" open-type="share" data-menu-id="{{item.menuId}}" >分享</button>
+          <button class="share" size="mini" plain bind:tap="share" open-type="share" data-menu-id="{{item.menuId}}" data-menu-name="{{item.name}}" >分享</button>
           <button class="edit" size="mini" plain bind:tap="edit" data-menu-id="{{item.menuId}}">编辑</button>
           <button class="delete" size="mini" plain bind:tap="delete" data-menu-id="{{item.menuId}}">删除</button>
         </view>
       </view>
     </view>
-    <view class="empty" wx:else>还没有菜单</view>
-      <button class="createMenuView" bind:tap="createMenu" plain>+ 创建新的菜单</button>
+    <view class="noMenus" wx:else>还没有菜单，先创建吧</view>
+
+    <button class="createMenuView" bind:tap="createMenu" plain>+ 创建新的菜单</button>
+    <view class="title">收藏的菜单</view>
+    <view wx:if="{{collectMenu.length}}">
+      <view class="menu" wx:for="{{collectMenu}}" wx:for-item="item">
+        <view class="name">{{item.menuName}}</view>
+        <view class="actions">
+          <button class="view" size="mini" plain bind:tap="viewMenu"  data-menu-id="{{item.menuId}}" data-menu-name="{{item.name}}" >查看</button>
+          <!-- <button class="delete" size="mini" plain bind:tap="delete" data-menu-id="{{item.menuId}}">删除</button> -->
+        </view>
+      </view>
+    </view>
+    <view wx:else>快去收藏吧</view>
+
   </view>
 </view>

@@ -1,35 +1,55 @@
 <!--index.wxml-->
 <view class="container">
-    <view wx:if="{{isOrdered}}">
-      <view class="title">已选菜品</view>
-      <view wx:for="{{orderList}}" wx:for-item="item" class="dish">
-      <image mode="aspectFit" src="{{item.img}}" class="img"></image>
-      <view class="dishContent">
-        <view class="dishName">{{item.name}}</view>
-      <view class="dishCount">x{{item.count}}</view>
-      </view>
+  <view wx:if="{{isOrdered}}">
+    <view class="orderList">
+      <view class="orderListTitle">已选菜品({{orderList.length}})</view>
+      <view class="orderItem" wx:for="{{orderList}}" wx:for-item="item" wx:key="{{item.name}}">
+        <image class="orderItemImg" src="{{item.img}}"></image>
+        <view class="orderItemContent">
+          <view class="orderItemName">
+            {{item.name}}
+          </view>
+          <view class="orderItemDesc">
+            这是备注
+          </view>
+        </view>
+        <view class="orderItemCount">x{{item.count}}</view>
       </view>
     </view>
-    <view wx:else>
+  </view>
+  <view wx:else>
     <view class="top">
       <view class="menuName">菜单名称</view>
-      <view class="collect"><image class="collectIcon" mode="scaleToFill" src="cloud://chishane-2gsirlz919069514.6368-chishane-2gsirlz919069514-1308342340/pic/Union.png"></image>收藏</view>
-    </view>
-      <menu-component menuData="{{menuData}}" typeList="{{typeList}}" activeIndex="{{activeIndex}}" orderList="{{orderList}}" type="share" bind:updateOrderList="updateOrderList" bind:updateMenuData="updateMenuData"></menu-component>
-    <page-container show="{{show}}" round="{{round}}" overlay="{{overlay}}" duration="{{duration}}" position="{{position}}" close-on-slide-down="{{false}}" custom-style="{{customStyle}}" overlay-style="{{overlayStyle}}">
-      <view class="detail-page">
-        <view wx:for="{{orderList}}" wx:for-item="item" wx:key="{{item.name}}">{{item.name}}</view>
+      <view class="collect" bind:tap="collect">
+        <image class="collectIcon" mode="scaleToFill" src="cloud://chishane-2gsirlz919069514.6368-chishane-2gsirlz919069514-1308342340/pic/Union.png"></image>收藏
       </view>
-    </page-container>
-    <view class="bottom">
-    <view class="cart">
-      <image class="cart" mode="aspectFill" src="cloud://chishane-2gsirlz919069514.6368-chishane-2gsirlz919069514-1308342340/pic/cutlery_327556 1.png"></image>
-      <view class="orderCount">{{orderList.length}}</view>
     </view>
+    <menu-component menuData="{{menuData}}" typeList="{{typeList}}" activeIndex="{{activeIndex}}" orderList="{{orderList}}" type="share" bind:updateOrderList="updateOrderList" bind:updateMenuData="updateMenuData"></menu-component>
+    <view class="overlay" wx:if="{{isOverlayVisible}}" bindtap="hideOverlay">
+      <view class="orderListModal">
+        <view class="orderListTitle">已选菜品({{orderList.length}})</view>
+        <view class="orderItem" wx:for="{{orderList}}" wx:for-item="item" wx:key="{{item.name}}">
+          <image class="orderItemImg" src="{{item.img}}"></image>
+          <view class="orderItemContent">
+            <view class="orderItemName">
+              {{item.name}}
+            </view>
+            <view class="orderItemDesc">
+              这是备注
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="bottom">
+      <view class="cart" bind:tap="popup">
+        <image class="cart" mode="aspectFill" src="cloud://chishane-2gsirlz919069514.6368-chishane-2gsirlz919069514-1308342340/pic/cutlery_327556 1.png"></image>
+        <view class="orderCount">{{orderList.length}}</view>
+      </view>
       <button wx:if="{{ orderList.length > 0 }}" bind:tap="submitOrder" class="submitActive" plain>提交</button>
       <view class="noOrder" wx:else>未点菜</view>
     </view>
     <!-- <button bind:tap="submitOrder" class="submitBtn">我选好了</button> -->
-    </view>
+  </view>
 
 </view>

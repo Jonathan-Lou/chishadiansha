@@ -1,12 +1,17 @@
 const {
   envList
 } = require("../../envList");
+import { getOpenId } from '../../common/index';
 import {
   submitOrder,
   fetchDishes,
-  fetchSharedDishes
-} from '../../fetch/index'
-
+  fetchSharedDishes,
+  collectMenu,
+  fetchUser,
+  fetchOpenId,
+  createUser
+} from '../../fetch/index';
+import { userRegister } from '../../common/index'
 
 Page({
   data: {
@@ -21,8 +26,10 @@ Page({
     showMenu:true,
     menuName:'',
     isOrdered:false,
+    isOverlayVisible:false,
   },
   sharedId:'',
+  menuId:'',
 
   async fetchMenuList() {
     const app = getApp();
@@ -53,23 +60,31 @@ Page({
   },
 
   async onLoad(e) {
-    const { menuId,sharedId} = e;
+    const { menuId,sharedId,menuName} = e;
+    console.log('eeeee',e);
+    const openid = await fetchOpenId();
+    const app = getApp();
+    // 为全局变量赋值
+    app.globalData.openid = openid;
     console.log('sharedId',sharedId);
     console.log('menuId',menuId);
-    const sharedDishesData = await fetchSharedDishes(sharedId);
-    const dishes = sharedDishesData.result.dishes;
-    console.log('dishes',dishes);
-    if(dishes?.length > 0) {
-      this.setData({isOrdered:true,orderList:dishes})
-      return;
-    } 
+      const sharedDishesData = await fetchSharedDishes(sharedId);
+      const dishes = sharedDishesData.result.dishes;
+      console.log('dishes',dishes);
+      if(dishes?.length > 0) {
+        this.setData({isOrdered:true,orderList:dishes})
+        return;
+      }  
     this.sharedId = sharedId;
+    this.menuId = menuId;
+    this.menuName = menuName;
     this.render(menuId);
   },
 
   async render(menuId) {
     console.log('menuIdmenuId',menuId);
     const dishData = await fetchDishes(menuId);
+    console.log('dishData',dishData);
     const dishes = dishData.result;
     const menuMap = {};
     dishes?.forEach(item => {
@@ -132,24 +147,9 @@ Page({
     })
 
   },
-  popup(e) {
-    const position = e.currentTarget.dataset.position
-    let customStyle = ''
-    let duration = this.data.duration
-    switch (position) {
-      case 'top':
-      case 'bottom':
-        customStyle = 'height: 50%;'
-        break
-      case 'right':
-        break
-    }
-    this.setData({
-      position,
-      show: true,
-      customStyle,
-      duration
-    })
+
+  closeModal() {
+    this.setData({show:false})
   },
   updateOrderList(e) {
     const  orderList  = e.detail;
@@ -167,6 +167,54 @@ Page({
    const result = await submitOrder(this.sharedId,dishes);
    this.setData({isOrdered:true})
    console.log('result',result);
+  },
+
+  popup() {
+    this.setData({
+      isOverlayVisible:true
+    });
+
+  },
+  hideOverlay() {
+    this.setData({
+      isOverlayVisible:false
+    });
+  },
+  async collect() {
+    const openId =  getOpenId();
+    const isRegisteredData = await fetchUser(openId);
+    const isUser = isRegisteredData.result;
+    if(isUser) {
+    const data  = await collectMenu(openId,this.menuId,this.menuName);
+    console.log('data--',data);
+    if(data.result) {
+      wx.showToast({
+        title: '收藏成功！',
+      })
+    } else {
+      wx.showToast({
+        title: '请稍后重试',
+        icon:'error'
+      })
+    }
+
+    } else {
+      userRegister(openId);
+  
+        // wx.showModal({
+        //   title: '请注册',
+        //   content: '用户名',
+        //   editable:true,
+        //   complete: async (res) => {
+        //     if (res.confirm) {
+        //       console.log('res',res);
+        //       const result = await createUser(openId,res.content);
+        //       console.log('result',result);
+        //     }
+        //   }
+        // })
+    }
+
   }
 
 });

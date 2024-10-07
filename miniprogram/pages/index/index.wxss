@@ -81,7 +81,14 @@ page {
 
 }
 
-.help {
-  position: absolute;
-  bottom:0;
+.enterMenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 150rpx 48rpx 0;
+  height: 200rpx;
+  border-radius: 200rpx;
+  font-size: 48rpx;
+  color: #fff;
+  background-color: #382600;
 }

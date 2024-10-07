@@ -1,0 +1,22 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="top">
+      <view class="menuName">订单</view>
+    </view>
+<view class="dishes">
+  <view class="dish" wx:for="{{dishList}}" wx:for-item="item" wx:key="{{item.name}}">
+        <image class="orderItemImg" src="{{item.img}}"></image>
+        <view class="orderItemContent">
+          <view class="orderItemName">
+            {{item.name}}
+          </view>
+          <view class="orderItemDesc">
+            这是备注
+          </view>
+        </view>
+        <view class="orderItemCount">x{{item.count}}</view>
+      </view>
+</view>
+ 
+
+</view>
