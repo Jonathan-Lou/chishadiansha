@@ -4,11 +4,12 @@
     <view class="header">
       <view class="banner">
         <view class="banner-content">
-          <view class="banner-title">点啥吃啥
-            <view class="banner-tip">私家厨房线上服务</view>
-          </view>
+          <view class="banner-title">点啥吃啥</view>
+          <view class="banner-subtitle"><span class="bold">REWARDS</span>  吃点俱乐部</view>
+            <view class="banner-tip">开始选择今天的菜单吧</view>
         </view>
-        <!-- <view class="banner-btn">登录</view> -->
+        <view class="login-btn" wx:if="{{ userName }}">登录</view>
+        <view class="user-info" wx:else="">用户：{{ username }}</view>
       </view>
     </view>
     <view class="body">

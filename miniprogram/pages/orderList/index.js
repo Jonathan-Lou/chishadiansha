@@ -1,39 +1,47 @@
+import {
+  fetchOrderList
+} from '../../fetch/order';
+import {
+  getOpenId
+} from '../../common/index';
+import { formatDate } from '../../common/utils';
+
 Page({
   data: {
-    goodsList: [{
-      _id: '1',
-      title: '商品1',
-      price: 1,
-    }],
+    orderList: []
   },
 
-  onLoad() {
+  async onLoad() {
     // this.fetchGoodsList();
-  },
-
-  async fetchGoodsList() {
-    this.setData({ isLoading: true });
-    const res = await wx.cloud.callFunction({
-      name: 'quickstartFunctions',
-      data: { type: 'fetchGoodsList' },
-    });
-    const goodsList = res?.result?.dataList || [];
+    const openId = await getOpenId();
+    const orderListRes = await fetchOrderList(openId);
+    console.log('orderListRes',orderListRes);
+    const orderList = orderListRes?.result?.data;
+    orderList.map(item => {
+      const {createTime} = item;
+      if(createTime) {
+        item.createTime = formatDate(createTime);
+      };
+    })
     this.setData({
-      isLoading: false,
-      goodsList
-    });
+      orderList
+    })
+
   },
 
-  async generateMPCode() {
-    wx.showLoading();
-    const resp = await wx.cloud.callFunction({
-      name: 'quickstartFunctions',
-      data: {
-        type: 'genMpQrcode',
-        pagePath: 'pages/goods-list/index',
-      }
-    });
-    this.setData({ codeModalVisible: true, codeImageSrc: resp?.result });
-    wx.hideLoading();
-  },
-});   
+  goToDetail(e) {
+    console.log('eee',e);
+    const { orderId,type,sharedId } = e.currentTarget.dataset;
+    console.log('typetype',type);
+    if(type === 'shared') {
+      wx.navigateTo({
+        url: `/pages/sharedMenu/index?sharedId=${sharedId}`,
+      })
+    } else {
+      wx.navigateTo({
+        url: `/pages/orderDetail/index?orderId=${orderId}`,
+      })
+    }
+ 
+  }
+});

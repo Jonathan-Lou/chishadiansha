@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "dish-component":"/components/editDish/index"
   },
   "navigationBarBackgroundColor": "#fff"
 }

@@ -162,9 +162,10 @@ Page({
     this.setData({menuData})
   },
   async submitOrder() {
+    const openId =  getOpenId();
     console.log('orderList2',this.data.orderList);
     const dishes = this.data.orderList?.map(item => {return {img:item.img,name:item.name,type:item.type,count:item.count}})
-   const result = await submitOrder(this.sharedId,dishes);
+   const result = await submitOrder(this.sharedId,dishes,openId);
    this.setData({isOrdered:true})
    console.log('result',result);
   },
@@ -200,19 +201,7 @@ Page({
 
     } else {
       userRegister(openId);
-  
-        // wx.showModal({
-        //   title: '请注册',
-        //   content: '用户名',
-        //   editable:true,
-        //   complete: async (res) => {
-        //     if (res.confirm) {
-        //       console.log('res',res);
-        //       const result = await createUser(openId,res.content);
-        //       console.log('result',result);
-        //     }
-        //   }
-        // })
+
     }
 
   }

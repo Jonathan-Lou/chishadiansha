@@ -6,7 +6,8 @@ const createOrder = async (orderId,dishes,openId) => {
       param: {
         orderId,
         dishes,
-        openId
+        openId,
+        type:'self'
       }
     }
   })
@@ -26,8 +27,22 @@ const fetchOrder = async (orderId) => {
   return data;
 }
 
+const fetchOrderList = async (openId) => {
+  const data = await wx.cloud.callFunction({
+    name: 'orderFunctions',
+    data: {
+      type: 'fetchOrderList',
+      param: {
+        openId,
+      }
+    }
+  })
+  return data;
+}
+
 
 module.exports = {
   createOrder,
-  fetchOrder
+  fetchOrder,
+  fetchOrderList
 }

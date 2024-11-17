@@ -1,5 +1,4 @@
 const cloud = require('wx-server-sdk');
-const fetchUser = require('../fetchUser/index')
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 });
@@ -18,7 +17,7 @@ exports.main = async (event, context) => {
   } catch(e) {
     user = null;
   }
-  console.log('user',user);
+  console.log('user22',user);
   if (!user) {
     await db.collection('user').add({
       data: {
@@ -27,8 +26,8 @@ exports.main = async (event, context) => {
         userName
       }
     });
-    return true;
+    return {userName,openId,success:true};
   } else {
-    return false;
+    return {userName:user.result.data.userName,openId:user.result.data.openId,success:true};
   }
 }

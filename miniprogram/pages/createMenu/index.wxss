@@ -4,94 +4,16 @@
 }
 
 .name {
-  margin-bottom: 24rpx;
-  font-size: 48rpx;
-  color:bisque;
-  font-weight: bold;
-}
-
-.inputName {
-  margin-top: 12rpx;
-  width:fit-content;
-  border: 1rpx solid #333;
-}
-.menu-container {
   display: flex;
-  height: calc(100% - 300rpx);
-  width: 100%;
+  align-items: center;
+  padding: 16rpx 20rpx;
+  font-size: 32rpx;
+  background:#f6f4f0;
+  color:#333;
 }
 
-.menu-left {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width:180rpx;
-  background-color:#c1c1c1;
-}
-
-.menu-left-item {
-  text-align: center;
-  padding: 12px 0;
-}
-
-.menu-right {
-  flex:1;
-  overflow: scroll;
-}
-.menu-right-item {
-  position: relative;
-  display: flex;
-  width: 100%;
-  padding:12px 0;
-  text-align: center;
-}
-
-.menu-right-img {
-  width:200rpx;
-  height:200rpx;
-}
-
-.menu-right-item-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: 12rpx;
-}
-.add_minus {
-  position: absolute;
-  display: flex;
-  right: 48rpx;
-  bottom: 28rpx;
-}
-
-.minus {
-  background-color: rgb(231, 113, 70);
-  width: 48rpx;
-  height:48rpx;
-  border-radius: 48rpx;
-}
-
-.count {
-  padding:0 10rpx;
-  width: 40rpx;
-}
-.add {
-  background-color: rgb(231, 113, 70);
-  width: 48rpx;
-  height:48rpx;
-  border-radius: 48rpx;
-}
-
-.active {
-  background-color: #fff;
-}
-
-.orderedBtn {
-  position: absolute;
-  left: 24rpx;
-  bottom:12rpx;
-}
-
-.submitBtn {
-  margin-top: 60rpx;
+.addBtn {
+  margin: 12rpx 0;
+  background-color:#382600 !important;
+  color:#fff !important;
 }

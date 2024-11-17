@@ -1,10 +1,9 @@
 <!--index.wxml-->
 <view class="container">
   <view class="name">正在创建：{{menuName}} </view>
-
 <view>
 </view>
-<button bind:tap="createDish" plain="true" size="mini">+添加菜品</button>
+<button class="addBtn" bind:tap="createDish" plain="true" size="mini">+添加菜品</button>
 <menu-component menuData="{{menuData}}" typeList="{{typeList}}"></menu-component>
 <button class="finishBtn" bind:tap="finish">完成</button>
 </view>

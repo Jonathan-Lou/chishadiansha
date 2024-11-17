@@ -1,18 +1,10 @@
-const {
-  envList
-} = require("../../envList");
-const {
-  QuickStartPoints,
-  QuickStartSteps
-} = require("./constants");
+
 import { getOpenId } from '../../common/index';
 import { fetchDish,updateDish } from '../../fetch/index';
 
 
 Page({
   data: {
-    knowledgePoints: QuickStartPoints,
-    steps: QuickStartSteps,
     photoSrc: '',
     menuData:[],
     isNewPhoto:false,

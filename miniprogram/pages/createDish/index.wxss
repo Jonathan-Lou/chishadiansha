@@ -6,6 +6,10 @@ page {
   background-color: #fff;
 }
 
+.takePhoto {
+  color: #fff;
+  background-color: #382600;
+}
 .container {
   width: 100%;
   height: 100%;

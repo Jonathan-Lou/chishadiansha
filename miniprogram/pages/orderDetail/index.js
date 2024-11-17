@@ -1,11 +1,9 @@
 const {
   envList
 } = require("../../envList");
-import { getOpenId } from '../../common/index';
 import {
   fetchOrder
 } from '../../fetch/order';
-import { userRegister } from '../../common/index'
 
 Page({
   data: {

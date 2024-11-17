@@ -2,7 +2,7 @@
 <view class="container">
   <view class="loading" wx:if="{{loading}}">加载中...</view>
   <view class="content" wx:else>
-    <view class="title">已经创建的菜单</view>
+    <view class="title">- 我创建的菜单 -</view>
     <view class="menus" wx:if="{{menuList.length}}">
       <view class="menu"  wx:for="{{menuList}}" wx:for-item="item">
         <view class="name">{{item.name}}</view>
@@ -15,8 +15,8 @@
     </view>
     <view class="noMenus" wx:else>还没有菜单，先创建吧</view>
 
-    <button class="createMenuView" bind:tap="createMenu" plain>+ 创建新的菜单</button>
-    <view class="title">收藏的菜单</view>
+    <button class="createMenuView" bind:tap="createMenu" plain>+ 创建新的菜单 +</button>
+    <view class="title">- 我的收藏 -</view>
     <view wx:if="{{collectMenu.length}}">
       <view class="menu" wx:for="{{collectMenu}}" wx:for-item="item">
         <view class="name">{{item.menuName}}</view>

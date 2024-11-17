@@ -71,10 +71,10 @@ const createSharedMenu = async (sharedId) => {
   return res;
 };
 
-const submitOrder = async (sharedId,dishes) => {
+const submitOrder = async (sharedId,dishes,openId) => {
   const res = await wx.cloud.callFunction({
     name:'quickstartFunctions',
-    data:{ type: 'submitOrder',param:{sharedId,dishes} }
+    data:{ type: 'submitOrder',param:{sharedId,dishes,openId} }
   });
   return res;
 }
@@ -97,6 +97,7 @@ const collectMenu = async (openId,menuId,menuName) => {
 }
 
 const fetchUser = async (openId) => {
+  console.log('fetchUser-openId',openId);
   const res = await wx.cloud.callFunction({
     name:'userFunction',
     data:{ type: 'fetchUser',param:{ openId } }
@@ -106,15 +107,16 @@ const fetchUser = async (openId) => {
 
 const createUser = async (openId,userName) => {
   const res = await wx.cloud.callFunction({
-    name:'userFunction',
+    name:'userFunctions',
     data:{ type: 'createUser',param:{ openId,userName } }
   });
   return res;
 }
 
 const fetchOpenId = async () => {
+  console.log('aa');
   const data = await wx.cloud.callFunction({
-    name: 'quickstartFunctions',
+    name: 'userFunctions',
     data: {
       type: 'getOpenId'
     }

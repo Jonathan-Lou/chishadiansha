@@ -14,27 +14,26 @@
 
 .menu-left-item {
   box-sizing: border-box;
-  height:88 rpx;
   text-align: center;
-  padding: 40rpx 0;
+  padding: 16rpx 0;
 }
 
 
 .menu-right {
   flex:1;
   overflow: scroll;
-  margin-left: 16rpx;
 }
 .typeName {
   box-sizing: border-box;
   height:88 rpx;
-  padding: 40rpx 0;
+  padding: 16rpx;
+  border-bottom: 1rpx solid #F6F4F0;
 }
 .menu-right-item {
   position: relative;
   display: flex;
   width: 100%;
-  padding:12px 0;
+  padding:16rpx;
   margin-bottom: 16rpx;
 }
 

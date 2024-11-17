@@ -4,19 +4,26 @@ cloud.init({
 });
 const db = cloud.database();
 exports.main = async (event, context) => {
-  console.log('进入了createOrder');
+  console.log('进入了createOrder--event',event);
+  console.log('进入了createOrder--context',context);
   const param = event.param;
   const {
     orderId,
     dishes,
-    openId
+    openId,
+    type,
+    sharedId
   } = param;
+  const createTime = new Date().getTime();
    const res = await db.collection('orders').add({
       data: {
         _id:orderId,
         orderId,
         dishes,
-        openId
+        openId,
+        createTime,
+        type,
+        sharedId
       }
     });
     console.log('res',res);

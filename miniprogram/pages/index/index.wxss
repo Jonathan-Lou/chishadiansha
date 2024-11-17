@@ -14,8 +14,12 @@ page {
 
 .header {
   position: relative;
-  height: 300rpx;
-  background-color:peachpuff;
+  height: 292rpx;
+  width: 100%;
+  background-image: url('https://6368-chishane-2gsirlz919069514-1308342340.tcb.qcloud.la/pic/topBackground.png?sign=89054966fff4162d04c85c556753a36a&t=1731825911');
+  background-size: contain; /* 使背景图像覆盖整个元素 */
+  background-position: center; /* 使背景图居中 */
+  background-repeat: no-repeat;
 }
 
 .banner {
@@ -24,18 +28,26 @@ page {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24rpx;
-  height: 60px;
-  width: 80%;
+  padding: 32rpx 24rpx;
+  height: 150rpx;
+  width: 100%;
   border-radius: 50rpx;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -50rpx;
-  background-color: peru;
+  bottom: -40rpx;
+  background-image:url('https://6368-chishane-2gsirlz919069514-1308342340.tcb.qcloud.la/pic/middleBackgroud.png?sign=0e8c797e2b128de05c193cfbeecb56a7&t=1731825951');
+  background-size: cover; /* 使背景图像覆盖整个元素 */
+  background-position: center; /* 使背景图居中 */
 }
 
 .banner-title {
   font-size: 32rpx;
+  color:#382600;
+  font-weight: 600;
+}
+
+.banner-subtitle {
+  font-size: 16rpx;
 }
 
 .banner-tip {
@@ -85,10 +97,16 @@ page {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 150rpx 48rpx 0;
-  height: 200rpx;
-  border-radius: 200rpx;
+  margin: 60rpx 18rpx 0;
+  height: 318rpx;
+  border-radius: 20rpx;
   font-size: 48rpx;
   color: #fff;
-  background-color: #382600;
+  background-image: url('https://6368-chishane-2gsirlz919069514-1308342340.tcb.qcloud.la/pic/bottomBackground.png?sign=0d2e8ab3d8b10a15cfe4643cd51de20d&t=1731828500');
+  background-size: cover; /* 使背景图像覆盖整个元素 */
+  background-position: center; /* 使背景图居中 */
+}
+
+.bold {
+  font-weight: 600;
 }

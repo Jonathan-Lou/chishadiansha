@@ -4,7 +4,7 @@
 }
 .title {
   text-align: center;
-  font-size: 40rpx;
+  font-size: 32rpx;
 }
 
 .content {
@@ -18,10 +18,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12rpx 24rpx;
+  padding: 24rpx 24rpx;
+  height:66rpx;
   margin: 12rpx 24rpx 0;
   border-radius: 12rpx;
-  background-color:antiquewhite;
+  background-color:#FFEF73;
+}
+.menu:nth-child(2n) {
+  background-color:#FFD400;
 }
 
 .actions {
@@ -31,6 +35,9 @@
 .actions button {
   font-size: 24rpx !important;
   margin: 0 6rpx;
+  border-radius: 84rpx;
+  color: #fff;
+  background-color: #382600;
 }
 
 .loading {
@@ -43,8 +50,14 @@
 }
 
 .createMenuView {
-  margin: 48rpx 0;
-  background-color:antiquewhite !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12rpx 0 24rpx;
+  height:132rpx;
+  width: calc(100% - 48rpx) !important;
+  color: #fff !important;
+  background-color:#382600 !important;
 }
 .noMenus {
   margin-top: 20rpx;

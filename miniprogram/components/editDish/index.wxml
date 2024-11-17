@@ -12,6 +12,6 @@
   <view class="type">
     菜品类型：<input class="input-type" name="type" auto-focus placeholder="输入菜品类型(蔬菜、荤菜等)" />
   </view>
-  <button style="margin: 30rpx 0" type="primary" formType="submit">完成</button>
+  <button class="submitBtn" style="margin: 30rpx 0" type="primary" formType="submit">确认</button>
   </form>
 </view>

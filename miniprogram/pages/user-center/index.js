@@ -1,4 +1,5 @@
-const { envList } = require('../../envList');
+const { fetchUser } = require('../../fetch/index');
+const { userRegister } = require('../../common/index')
 
 // pages/me/index.js
 Page({
@@ -8,37 +9,23 @@ Page({
   data: {
     openId: '',
     showUploadTip: false,
+    username:''
   },
 
-  getOpenId() {
+  async getUserInfo() {
     wx.showLoading({
       title: '',
     });
-    wx.cloud
-      .callFunction({
-        name: 'quickstartFunctions',
-        data: {
-          type: 'getOpenId',
-        },
-      })
-      .then((resp) => {
-        this.setData({
-          haveGetOpenId: true,
-          openId: resp.result.openid,
-        });
-        wx.hideLoading();
-      })
-      .catch((e) => {
-        this.setData({
-          showUploadTip: true,
-        });
-        wx.hideLoading();
-      });
-  },
-
-  gotoWxCodePage() {
-    wx.navigateTo({
-      url: `/pages/exampleDetail/index?envId=${envList?.[0]?.envId}&type=getMiniProgramCode`,
-    });
-  },
+    const openid = await fetchOpenId();
+    console.log('openid',openid);
+    const user = await fetchUser(openid);
+    wx.hideLoading();
+    // 如果用户id不存在，说明没有注册
+    if(!user?.result?.data?._id) {
+      const register = await userRegister(openid);
+      this.setData({username:register.userName})
+    } else {
+      this.setData({username:user.result.data.userName})
+    }
+  }
 });

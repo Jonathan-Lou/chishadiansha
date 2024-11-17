@@ -43,8 +43,8 @@
       {
         "pagePath": "pages/orderList/index",
         "text": "订单",
-        "iconPath": "images/icons/home.png",
-        "selectedIconPath": "images/icons/home-active.png"
+        "iconPath": "images/icons/order.png",
+        "selectedIconPath": "images/icons/order-active.png"
       },
       {
         "pagePath": "pages/user-center/index",

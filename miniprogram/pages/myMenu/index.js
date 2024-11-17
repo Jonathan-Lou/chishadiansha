@@ -37,6 +37,7 @@ Page({
     const openId = getOpenId();
     console.log('openId',openId);
     const user = await fetchUser(openId);
+    console.log('useruseruser--',user);
     let collectMenu;
     if(!user.result) {
       userRegister(openId);
