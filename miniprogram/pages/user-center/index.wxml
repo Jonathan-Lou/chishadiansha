@@ -3,7 +3,7 @@
   <view class="top_bg" />
   <view class="main_content">
     <view class="userinfo_container">
-      <image class="avatar" src="../../images/icons/avatar.png" bind:tap="getOpenId" mode="widthFix" />
+      <image class="avatar" src="../../images/icons/avatar.png" mode="widthFix" />
       <block wx:if="{{ !username }}">
         <view class="username" bind:tap="getUserInfo">请点击登录</view>
       </block>

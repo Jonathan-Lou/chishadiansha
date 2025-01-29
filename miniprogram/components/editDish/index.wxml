@@ -1,17 +1,54 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="photo" bind:tap="takePhoto">
-    <view wx:if="{{!photoSrc}}" class="takePhoto">点击上传图片</view>
-    <image wx:if="{{photoSrc}}" class="photoImg" name="photo" mode="aspectFit" src="{{photoSrc}}"></image>
+<view class="mask" wx:if="{{visible}}" bindtap="onClose">
+  <view class="modal" catchtap="preventDefault">
+    <view class="modal-header">
+      <text class="title">{{pageType === 'edit' ? '编辑菜品' : '添加菜品'}}</text>
+      <view class="close" bindtap="onClose">×</view>
+    </view>
     
+    <view class="modal-content">
+      <view class="photo" bind:tap="takePhoto">
+        <view wx:if="{{!photoSrc}}" class="takePhoto">
+          <text>点击上传图片</text>
+          <text class="tip">建议尺寸 200x200</text>
+        </view>
+        <image 
+          wx:else 
+          class="photoImg" 
+          mode="aspectFit" 
+          src="{{photoSrc}}"
+        />
+      </view>
+
+      <form catchsubmit="formSubmit">
+        <view class="form-item">
+          <text class="label">菜品名称</text>
+          <input 
+            class="input" 
+            name="name" 
+            placeholder="输入菜品名称" 
+            value="{{dishData.name}}"
+          />
+        </view>
+
+        <view class="form-item">
+          <text class="label">菜品类型</text>
+          <input 
+            class="input" 
+            name="type" 
+            placeholder="输入菜品类型(如:蔬菜、荤菜等)" 
+            value="{{dishData.type}}"
+          />
+        </view>
+
+        <button 
+          class="submit-btn {{isUploading ? 'disabled' : ''}}"
+          formType="submit"
+          disabled="{{isUploading}}"
+        >
+          {{isUploading ? '保存中...' : '确认'}}
+        </button>
+      </form>
+    </view>
   </view>
-  <form catchsubmit="formSubmit" catchreset="formReset">
-  <view class="name">
-    菜品名称：<input class="input-name" name="name" auto-focus placeholder="输入菜品名称" />
-  </view>
-  <view class="type">
-    菜品类型：<input class="input-type" name="type" auto-focus placeholder="输入菜品类型(蔬菜、荤菜等)" />
-  </view>
-  <button class="submitBtn" style="margin: 30rpx 0" type="primary" formType="submit">确认</button>
-  </form>
 </view>

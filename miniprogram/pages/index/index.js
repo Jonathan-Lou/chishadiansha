@@ -1,3 +1,4 @@
+const { userRegister } = require("../../common/index");
 const {
   envList
 } = require("../../envList");
@@ -18,12 +19,25 @@ Page({
     console.log('app.globalData.openid', app.globalData.openid);
     const user = await fetchUser(openid);
     console.log('user--',user);
-    // 如果用户id不存在，说明没有注册
-    if (user?.result?.data?._id) {
-      console.log('user.result.data.userName',user.result.data.userName);
+    // 如果用户id不存在，会返回result为false
+    if(!user?.result) {
+      try {
+        const register = await userRegister(openid);
+        console.log('register==',register)
+        this.setData({
+          username: register.userName
+        });
+      } catch(err) {
+        console.error('注册失败:', err);
+        wx.showToast({
+          title: '注册失败,请重试',
+          icon: 'error'
+        });
+      }
+    } else {
       this.setData({
         username: user.result.data.userName
-      })
+      });
     }
   },
 

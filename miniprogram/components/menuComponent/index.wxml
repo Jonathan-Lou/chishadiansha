@@ -25,7 +25,7 @@
             <view class="add" data-id="{{item.name}}" data-type="{{item.type}}" bind:tap="add">+</view>
           </view>
           <view wx:if="{{type === 'edit'}}" class="actions">
-            <button class="edit" size="mini" plain bind:tap="edit" data-dish-id="{{item.dishId}}">编辑</button>
+            <button class="edit" size="mini" plain bind:tap="edit" data-dish="{{item}}">编辑</button>
             <button class="delete" size="mini" plain bind:tap="delete" data-dish-id="{{item.dishId}}">删除</button>
           </view>
 

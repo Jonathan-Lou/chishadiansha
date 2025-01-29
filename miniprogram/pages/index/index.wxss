@@ -16,7 +16,7 @@ page {
   position: relative;
   height: 292rpx;
   width: 100%;
-  background-image: url('https://6368-chishane-2gsirlz919069514-1308342340.tcb.qcloud.la/pic/topBackground.png?sign=89054966fff4162d04c85c556753a36a&t=1731825911');
+  background-image: url('https://6368-chishadiansha-ppe-3ems5xeb1803ad-1308342340.tcb.qcloud.la/pic/topBanner.png?sign=90d7bbff76e43993cc6d2cfc1aa5bed0&t=1736590612');
   background-size: contain; /* 使背景图像覆盖整个元素 */
   background-position: center; /* 使背景图居中 */
   background-repeat: no-repeat;
@@ -35,7 +35,7 @@ page {
   left: 50%;
   transform: translateX(-50%);
   bottom: -40rpx;
-  background-image:url('https://6368-chishane-2gsirlz919069514-1308342340.tcb.qcloud.la/pic/middleBackgroud.png?sign=0e8c797e2b128de05c193cfbeecb56a7&t=1731825951');
+  background-image:url('https://6368-chishadiansha-ppe-3ems5xeb1803ad-1308342340.tcb.qcloud.la/pic/userBanner.png?sign=18735657c8ddea07309cc84c23d2cbfd&t=1736590638');
   background-size: cover; /* 使背景图像覆盖整个元素 */
   background-position: center; /* 使背景图居中 */
 }
@@ -102,7 +102,7 @@ page {
   border-radius: 20rpx;
   font-size: 48rpx;
   color: #fff;
-  background-image: url('https://6368-chishane-2gsirlz919069514-1308342340.tcb.qcloud.la/pic/bottomBackground.png?sign=0d2e8ab3d8b10a15cfe4643cd51de20d&t=1731828500');
+  background-image: url('https://6368-chishadiansha-ppe-3ems5xeb1803ad-1308342340.tcb.qcloud.la/pic/enter.png?sign=2ac5e924002b4ebcdae1b2ec9e237bd6&t=1736590693');
   background-size: cover; /* 使背景图像覆盖整个元素 */
   background-position: center; /* 使背景图居中 */
 }

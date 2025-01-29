@@ -1,5 +1,5 @@
 const { fetchUser } = require('../../fetch/index');
-const { userRegister } = require('../../common/index')
+const { userRegister, getOpenId } = require('../../common/index')
 
 // pages/me/index.js
 Page({
@@ -16,13 +16,12 @@ Page({
     wx.showLoading({
       title: '',
     });
-    const openid = await fetchOpenId();
-    console.log('openid',openid);
-    const user = await fetchUser(openid);
+    const openId = getOpenId();
+    const user = await fetchUser(openId);
     wx.hideLoading();
     // 如果用户id不存在，说明没有注册
     if(!user?.result?.data?._id) {
-      const register = await userRegister(openid);
+      const register = await userRegister(openId);
       this.setData({username:register.userName})
     } else {
       this.setData({username:user.result.data.userName})

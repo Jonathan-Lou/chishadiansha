@@ -9,8 +9,7 @@ Page({
     menuData:[],
     isNewPhoto:false,
     menuId:'',
-    dishData:null
-
+    dishData:null,
   },
   async onLoad(e) {
     const dishId = e.dishId;

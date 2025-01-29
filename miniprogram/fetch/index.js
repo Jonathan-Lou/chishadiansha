@@ -90,7 +90,7 @@ const fetchSharedDishes = async (sharedId) => {
 
 const collectMenu = async (openId,menuId,menuName) => {
   const res = await wx.cloud.callFunction({
-    name:'userFunction',
+    name:'userFunctions',
     data:{ type: 'collectMenu',param:{ openId,menuId,menuName } }
   });
   return res;
@@ -99,7 +99,7 @@ const collectMenu = async (openId,menuId,menuName) => {
 const fetchUser = async (openId) => {
   console.log('fetchUser-openId',openId);
   const res = await wx.cloud.callFunction({
-    name:'userFunction',
+    name:'userFunctions',
     data:{ type: 'fetchUser',param:{ openId } }
   });
   return res;

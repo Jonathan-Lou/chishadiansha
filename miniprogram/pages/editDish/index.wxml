@@ -1,4 +1,4 @@
 <!--index.wxml-->
 <view class="container">
- <dish-component></dish-component>
+ <dish-component dishData="{{dishData}}" photoSrc="{{photoSrc}}" pageType="edit"></dish-component>
 </view>

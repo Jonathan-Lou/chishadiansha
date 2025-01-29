@@ -9,6 +9,9 @@ Page({
     menuName:'',
     menuData:[],
     typeList:[],
+    showEditDish: false,
+    currentDish: null,
+    modalType: '' // 'add' 或 'edit'
   },
 
   onLoad(e) {
@@ -72,5 +75,31 @@ Page({
     console.log('父组件中updateMenuData');
     const menuId = this.data.menuId;
     this.render(menuId);
+  },
+  showAddDishModal() {
+    this.setData({
+      showEditDish: true,
+      currentDish: null,
+      modalType: 'add'
+    });
+  },
+  showEditDishModal(e) {
+    const dish = e.detail;
+    this.setData({
+      showEditDish: true,
+      currentDish: dish,
+      modalType: 'edit'
+    });
+  },
+  hideEditDishModal() {
+    this.setData({
+      showEditDish: false,
+      currentDish: null,
+      modalType: ''
+    });
+  },
+  onEditSuccess() {
+    this.hideEditDishModal();
+    this.render(this.data.menuId);
   }
 });

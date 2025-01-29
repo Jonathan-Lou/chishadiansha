@@ -59,7 +59,7 @@ Page({
         type: 'code',
         content: `
 const cloud = require('wx-server-sdk');
-cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV});
 exports.main = async (event, context) => {
   return {
     dataList: [
@@ -170,7 +170,7 @@ onLoad() {
         type: 'code',
         content: `
 const cloud = require('wx-server-sdk');
-cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV});
 
 const db = cloud.database();
 
@@ -217,7 +217,7 @@ exports.main = async (event, context) => {
         content: `
 const cloud = require('wx-server-sdk');
 
-cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV});
 
 exports.main = async (event, context) => {
   const pagePath = event.pagePath;

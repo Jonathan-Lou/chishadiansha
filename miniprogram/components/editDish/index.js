@@ -1,95 +1,193 @@
+import {
+  getOpenId
+} from '../../common/index';
+import {updateDish} from '../../fetch/index'
 
-import { getOpenId } from '../../common/index';
+const ALLOWED_IMAGE_TYPES = ['image'];
+const MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2MB
 
-Page({
+Component({
   data: {
     photoSrc: '',
-    menuData:[],
-    menuId:''
-
+    menuData: [],
+    menuId: '',
+    newDishData: null,
+    isUploading: false
   },
-  async onLoad(e) {
-    console.log('eeeeee',e);
-    const menuId = e.menuId;
-    this.setData({menuId})
-   
-  },
-
-  onShow(e) {
-  },
-
-  takePhoto() {
-    wx.chooseMedia({
-      count: 1,
-      mediaType: ['image', 'video'],
-      sourceType: ['album', 'camera'],
-      sizeType:['compressed'],
-      maxDuration: 30,
-      camera: 'back',
-      success: (res) => {
-        this.setData({
-          photoSrc: res.tempFiles[0].tempFilePath
-        })
+  properties: {
+    dishData: {
+      type: Object,
+      observer: function(newVal) {
+        console.log('newVal',newVal)
+        if(newVal) {
+          this.setData({
+            photoSrc: newVal.img
+          });
+        }
       }
-    })
+    },
+    pageType: {
+      type: String,
+      value: 'create'
+    },
+    menuId: String,
+    visible: {
+      type: Boolean,
+      value: false,
+      observer(newVal) {
+        if (!newVal) {
+          this.resetForm();
+        }
+      }
+    },
   },
-  uploadImage(imageSrc) {
-    wx.uploadFile({
-      url: 'https://your-server-url/upload', // 替换为您的上传接口
-      filePath: imageSrc,
-      name: 'file',
-      success: (res) => {
-        console.log('上传成功:', res);
+  lifetimes: {
+    attached: function () {
+      console.log('visible', this.properties.visible)
+      console.log('dishData222', this.properties.dishData)
+      // 在组件实例进入页面节点树时执行
+    },
+    detached: function () {
+      // 在组件实例被从页面节点树移除时执行
+    },
+  },
+  methods: {
+    takePhoto() {
+      wx.chooseMedia({
+        count: 1,
+        mediaType: ALLOWED_IMAGE_TYPES,
+        sourceType: ['album', 'camera'],
+        sizeType: ['compressed'],
+        success: (res) => {
+          const tempFile = res.tempFiles[0];
+          
+          // 检查文件大小
+          if(tempFile.size > MAX_IMAGE_SIZE) {
+            wx.showToast({
+              title: '图片大小不能超过2MB',
+              icon: 'none'
+            });
+            return;
+          }
+
+          this.setData({
+            photoSrc: tempFile.tempFilePath
+          });
+        },
+        fail: (err) => {
+          wx.showToast({
+            title: '选择图片失败',
+            icon: 'error'
+          });
+        }
+      });
+    },
+    async uploadImage(filePath) {
+      const openid = getOpenId();
+      const cloudPath = `${openid}/images/menu-${Date.now()}.png`;
+      
+      try {
+        const res = await wx.cloud.uploadFile({
+          cloudPath,
+          filePath
+        });
+        return res.fileID;
+      } catch(err) {
+        throw new Error('图片上传失败');
+      }
+    },
+    async formSubmit(e) {
+      try {
+        const { name, type } = e.detail.value;
+        
+        if(!this.validateForm(name, type)) {
+          return;
+        }
+
+        this.setData({ isUploading: true });
+        
+        let imgFileId = this.data.photoSrc;
+        if(this.data.photoSrc && this.data.photoSrc !== this.properties.dishData?.img) {
+          imgFileId = await this.uploadImage(this.data.photoSrc);
+        }
+
+        const dishData = {
+          name,
+          type,
+          img: imgFileId,
+          menuId: this.properties.menuId
+        };
+
+        if(this.properties.pageType === 'edit') {
+          // 编辑菜品
+          dishData.dishId = this.properties.dishData.dishId;
+          await wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+              type: 'updateDish',
+              param: dishData
+            }
+          });
+        } else {
+          // 添加菜品
+          await wx.cloud.callFunction({
+            name: 'quickstartFunctions',
+            data: {
+              type: 'createDish',
+              param: dishData
+            }
+          });
+        }
+
         wx.showToast({
-          title: '上传成功',
+          title: this.properties.pageType === 'edit' ? '修改成功' : '添加成功',
           icon: 'success'
         });
-      },
-      fail: (err) => {
-        console.error('上传失败:', err);
+
+        this.triggerEvent('success');
+        this.triggerEvent('close');
+      } catch(err) {
+        console.error(err);
         wx.showToast({
-          title: '上传失败',
+          title: '操作失败',
+          icon: 'error'
+        });
+      } finally {
+        this.setData({ isUploading: false });
+      }
+    },
+    validateForm(name, type) {
+      if(!this.data.photoSrc) {
+        wx.showToast({
+          title: '请上传菜品图片',
           icon: 'none'
         });
+        return false;
       }
-    });
-  },
-  async formSubmit(e) {
-    console.log('eee', e);
-    const {name,type} = e.detail.value;
-    if(!this.data.photoSrc) {
-      wx.showToast({
-        title: '照片未上传',
-        icon:'error'
-      });
-    return;
-    };
-    if(!name || !type ) {
-      wx.showToast({
-        title: '菜品名称/类型未填写',
-        icon:'error'
-      })
-      return;
-    }
-    const openid = getOpenId();
-    const cloudPath = `${openid}/images/menu-${Date.now()}.png`
-    wx.cloud.uploadFile({
-      cloudPath, // 上传至云端的路径
-      filePath: this.data.photoSrc, // 小程序临时文件路径
-      success: async (res) => {
-        // 返回文件 ID
-        const result = await wx.cloud.callFunction({
-          name:'quickstartFunctions',
-          data:{ type: 'createDish',param:{menuId:this.data.menuId,name,type,img:res.fileID} }
+
+      if(!name || !type) {
+        wx.showToast({
+          title: '请填写完整信息',
+          icon: 'none'
         });
-        console.log('result',result);
-        const app = getApp();
-       app.globalData.menuOnShow = true;
-        wx.navigateBack()
-      },
-      fail: console.error
-    });
+        return false;
+      }
 
+      return true;
+    },
+    onClose() {
+      this.resetForm();
+      this.triggerEvent('close');
+    },
+    preventDefault() {
+      // 阻止冒泡，防止点击内容区域关闭弹窗
+      return;
+    },
+    resetForm() {
+      this.setData({
+        photoSrc: '',
+        isUploading: false
+      });
+    },
   }
-
 });

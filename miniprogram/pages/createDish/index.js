@@ -6,9 +6,6 @@ const {
   QuickStartSteps
 } = require("./constants");
 import { getOpenId } from '../../common/index';
-import {
-  fetchMenu
-} from './mixin'
 
 Page({
   data: {

@@ -12,7 +12,6 @@ Component({
     type:String,
     updateMenuData:Function,
     updateOrderList:Function,
-    menuName:String
   },
   lifetimes: {
     attached: function () {
@@ -89,10 +88,15 @@ Component({
     },
 
     edit(e) {
-      const dishId = e.currentTarget.dataset.dishId;
-      wx.navigateTo({
-        url: `/pages/editDish/index?dishId=${dishId}`,
-      })
+      console.log('edit',e);
+      console.log('menuData',this.data.menuData)
+      const { dish } = e.currentTarget.dataset;
+      // 触发父组件的编辑事件
+      this.triggerEvent('editDish', dish);
+      // const dishId = e.currentTarget.dataset.dishId;
+      // wx.navigateTo({
+      //   url: `/pages/editDish/index?dishId=${dishId}`,
+      // })
     },
     async delete(e) {
       wx.showModal({

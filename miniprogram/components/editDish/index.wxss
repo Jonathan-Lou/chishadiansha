@@ -66,3 +66,88 @@ page {
   border-radius: 44rpx;
   background-color:#382600 !important;
 }
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  width: 90%;
+  max-width: 600rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #eee;
+}
+
+.title {
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.close {
+  font-size: 40rpx;
+  color: #999;
+  padding: 0 20rpx;
+}
+
+.modal-content {
+  padding: 32rpx;
+}
+
+.photo {
+  width: 200rpx;
+  height: 200rpx;
+  margin: 0 auto 32rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.form-item {
+  margin-bottom: 24rpx;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 24rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+.submit-btn {
+  width: 100% !important;
+  margin-top: 40rpx;
+  background: #382600 !important;
+  color: #fff;
+  border-radius: 44rpx;
+}
+
+.submit-btn.disabled {
+  opacity: 0.6;
+}

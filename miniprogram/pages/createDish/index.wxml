@@ -1,9 +1,10 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="photo" bind:tap="takePhoto">
+  <dish-component pageType='create' menuId="{{menuId}}"></dish-component>
+
+  <!-- <view class="photo" bind:tap="takePhoto">
     <view wx:if="{{!photoSrc}}" class="takePhoto">点击上传图片</view>
     <image wx:if="{{photoSrc}}" class="photoImg" name="photo" mode="aspectFit" src="{{photoSrc}}"></image>
-    
   </view>
   <form catchsubmit="formSubmit" catchreset="formReset">
   <view class="name">
@@ -13,5 +14,5 @@
     菜品类型：<input class="input-type" name="type" auto-focus placeholder="输入菜品类型(蔬菜、荤菜等)" />
   </view>
   <button style="margin: 30rpx 0" type="primary" formType="submit">完成</button>
-  </form>
+  </form> -->
 </view>

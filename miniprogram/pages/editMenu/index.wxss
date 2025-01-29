@@ -13,6 +13,9 @@
   border: 1rpx solid #333;
 }
 
+.menuComponentContainer {
+  width:100%;
+}
 
 .addBtn {
   margin: 12rpx 0;
