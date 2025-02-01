@@ -27,6 +27,7 @@ Page({
     menuName:'',
     isOrdered:false,
     isOverlayVisible:false,
+    userInfo: null
   },
   sharedId:'',
   menuId:'',
@@ -59,26 +60,77 @@ Page({
     })
   },
 
-  async onLoad(e) {
-    const { menuId,sharedId,menuName} = e;
-    console.log('eeeee',e);
-    const openid = await fetchOpenId();
-    const app = getApp();
-    // 为全局变量赋值
-    app.globalData.openid = openid;
-    console.log('sharedId',sharedId);
-    console.log('menuId',menuId);
-      const sharedDishesData = await fetchSharedDishes(sharedId);
-      const dishes = sharedDishesData.result.dishes;
-      console.log('dishes',dishes);
-      if(dishes?.length > 0) {
-        this.setData({isOrdered:true,orderList:dishes})
-        return;
-      }  
-    this.sharedId = sharedId;
+  async onLoad(options) {
+    try {
+      // 先获取用户信息
+      const openid = await getOpenId();
+      const userRes = await fetchUser(openid);
+      
+      if (!userRes?.result) {
+        // 用户未注册，弹出注册框
+        wx.showModal({
+          title: '请输入用户名',
+          editable: true,
+          placeholderText: '请输入您的名字',
+          success: async (res) => {
+            if (res.confirm) {
+              if (!res.content) {
+                wx.showToast({
+                  title: '用户名不能为空',
+                  icon: 'error'
+                });
+                wx.navigateBack();
+                return;
+              }
+              
+              // 注册用户
+              const registerRes = await wx.cloud.callFunction({
+                name: 'quickstartFunctions',
+                data: {
+                  type: 'createUser',
+                  param: {
+                    openid,
+                    userName: res.content
+                  }
+                }
+              });
+              
+              this.setData({
+                userInfo: registerRes.result
+              });
+              
+              // 注册成功后继续加载菜单数据
+              this.loadMenuData(options);
+            } else {
+              // 用户取消注册，返回上一页
+              wx.navigateBack();
+            }
+          }
+        });
+      } else {
+        // 用户已注册，直接设置用户信息并加载菜单
+        this.setData({
+          userInfo: userRes.result.data
+        });
+        this.loadMenuData(options);
+      }
+    } catch (err) {
+      console.error('获取用户信息失败:', err);
+      wx.showToast({
+        title: '获取用户信息失败',
+        icon: 'error'
+      });
+      wx.navigateBack();
+    }
+  },
+
+  // 封装加载菜单数据的方法
+  async loadMenuData(options) {
+    // 将原来 onLoad 中的菜单加载逻辑移到这里
+    const { menuId, menuName } = options;
     this.menuId = menuId;
     this.menuName = menuName;
-    this.render(menuId);
+    await this.render(menuId);
   },
 
   async render(menuId) {
