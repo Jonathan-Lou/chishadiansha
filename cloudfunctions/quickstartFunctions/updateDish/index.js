@@ -8,14 +8,16 @@ exports.main = async (event, context) => {
     dishId,
     name,
     type,
+    remark,
     img
   } = param;
-  console.log('dishId',dishId);
+  console.log('param===',param);
   return db.collection('dishes').doc(dishId).update({
     // data 字段表示需新增的 JSON 数据
     data: {
       name:name,
       type,
+      remark,
       img
     }
   }).then(res => {

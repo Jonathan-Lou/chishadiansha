@@ -9,15 +9,23 @@ Page({
   data: {
     menus:null,
     menuList:[],
-    loading:true,
-  collectMenu:[],
+    isLoading: true,
+    collectMenu:[],
   },
   sharedId:'',
   sharedMenuId:'',
   async onLoad() {
-    const [menuList,collectMenu] = await Promise.all([this.getMenuList(),this.getCollectList()]);
-    console.log('menuList1',menuList);
-    this.setData({ collectMenu,menuList,loading:false })
+    try {
+      wx.showLoading({ title: '加载中' });
+      const [menuList,collectMenu] = await Promise.all([this.getMenuList(),this.getCollectList()]);
+      console.log('menuList1',menuList);
+      this.setData({ collectMenu,menuList,isLoading: false })
+    } catch(err) {
+      console.error('获取菜单列表失败:', err);
+      this.setData({ isLoading: false });
+    } finally {
+      wx.hideLoading();
+    }
   },
 
   async onShow() {
@@ -26,7 +34,7 @@ Page({
   },
 
   async getMenuList() {
-    const openid = getOpenId();
+    const openid = await getOpenId();
     const menuListData = await fetchMenuList(openid);
     const menuList = menuListData.result.data;
     console.log('menuList',menuList);
@@ -34,7 +42,7 @@ Page({
   },
 
   async getCollectList() {
-    const openId = getOpenId();
+    const openId = await getOpenId();
     console.log('openId',openId);
     const user = await fetchUser(openId);
     console.log('useruseruser--',user);
@@ -50,15 +58,23 @@ Page({
   },
 
   createMenu() {
+    if (this.data.isLoading) {
+      wx.showToast({
+        title: '加载中，请稍候',
+        icon: 'none'
+      });
+      return;
+    }
+
     wx.showModal({
       title: '请输入菜单名称',
-      editable:true,
+      editable: true,
       content: '我的菜单',
       complete: async (res) => {
         if (res.confirm) {
           wx.showLoading({
             title: '创建中',
-          })
+          });
           const menuName = res.content;
           console.log('menuName',menuName);
           console.log('this.data.menuList',this.data.menuList);
@@ -72,7 +88,7 @@ Page({
             });
             return;
           };
-            const openid = getOpenId();
+            const openid = await getOpenId();
             const data = await wx.cloud.callFunction({
               name:'quickstartFunctions',
               data:{ type: 'createMenu',param:{ openid,menuName } }

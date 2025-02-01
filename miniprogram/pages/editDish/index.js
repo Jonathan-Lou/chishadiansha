@@ -1,4 +1,3 @@
-
 import { getOpenId } from '../../common/index';
 import { fetchDish,updateDish } from '../../fetch/index';
 
@@ -37,32 +36,39 @@ Page({
   },
  
   async formSubmit(e) {
-    const {name,type} = e.detail.value;
-    const openid = getOpenId();
+    const {name, type, remark} = e.detail.value;
+    const openid = await getOpenId();
     const cloudPath = `${openid}/images/menu-${Date.now()}.png`
-    const {dishId,img} = this.data.dishData;
+    const {dishId, img} = this.data.dishData;
+    
     if(this.data.isNewPhoto) {
       wx.cloud.uploadFile({
-        cloudPath, // 上传至云端的路径
-        filePath: this.data.photoSrc, // 小程序临时文件路径
+        cloudPath,
+        filePath: this.data.photoSrc,
         success: async (res) => {
-          // 返回文件 ID
-        const result = updateDish({name,type,dishId,img})
+          const result = updateDish({
+            name,
+            type,
+            remark,
+            dishId,
+            img: res.fileID
+          });
           console.log('result1',result);
-        //   const app = getApp();
-        //  app.globalData.menuOnShow = true;
           wx.navigateBack()
         },
-        fail: e => {
-          console.log('e',e);
-        }
+        fail: console.error
       });
-    }  else {
-        const result = updateDish({name,type,dishId,img})
-        console.log('result2',result);
-        wx.navigateBack()
+    } else {
+      const result = updateDish({
+        name,
+        type,
+        remark,
+        dishId,
+        img
+      });
+      console.log('result2',result);
+      wx.navigateBack()
     }
-
   }
 
 });

@@ -83,7 +83,7 @@ Component({
       });
     },
     async uploadImage(filePath) {
-      const openid = getOpenId();
+      const openid = await getOpenId();
       const cloudPath = `${openid}/images/menu-${Date.now()}.png`;
       
       try {
@@ -98,7 +98,7 @@ Component({
     },
     async formSubmit(e) {
       try {
-        const { name, type } = e.detail.value;
+        const { name, type, remark } = e.detail.value;
         
         if(!this.validateForm(name, type)) {
           return;
@@ -114,6 +114,7 @@ Component({
         const dishData = {
           name,
           type,
+          remark,
           img: imgFileId,
           menuId: this.properties.menuId
         };

@@ -40,7 +40,7 @@
     </view>
     <view class="bottom">
       <view class="cart" bind:tap="popup">
-        <image class="cart" mode="aspectFill" src="cloud://chishane-2gsirlz919069514.6368-chishane-2gsirlz919069514-1308342340/pic/cutlery_327556 1.png"></image>
+        <image class="cart" mode="aspectFill" src="cloud://chishadiansha-ppe-3ems5xeb1803ad.6368-chishadiansha-ppe-3ems5xeb1803ad-1308342340/pic/cart.png"></image>
         <view class="orderCount">{{orderList.length}}</view>
       </view>
       <button wx:if="{{ orderList.length > 0 }}" bind:tap="submitOrder" class="submitActive" plain>提交</button>

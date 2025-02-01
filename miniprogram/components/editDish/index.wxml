@@ -10,7 +10,6 @@
       <view class="photo" bind:tap="takePhoto">
         <view wx:if="{{!photoSrc}}" class="takePhoto">
           <text>点击上传图片</text>
-          <text class="tip">建议尺寸 200x200</text>
         </view>
         <image 
           wx:else 
@@ -38,6 +37,16 @@
             name="type" 
             placeholder="输入菜品类型(如:蔬菜、荤菜等)" 
             value="{{dishData.type}}"
+          />
+        </view>
+
+        <view class="form-item">
+          <text class="label">备注</text>
+          <textarea 
+            class="textarea" 
+            name="remark" 
+            placeholder="输入备注信息（可选）" 
+            value="{{dishData.remark}}"
           />
         </view>
 

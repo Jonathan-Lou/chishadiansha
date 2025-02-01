@@ -7,6 +7,7 @@ exports.main = async (event, context) => {
     menuId,
     name,
     type,
+    remark,
     img
   } = param;
   const dishId = menuId+name;
@@ -20,6 +21,7 @@ exports.main = async (event, context) => {
       menuId,
       name,
       type,
+      remark,
       img
     }
   }).then(res => {

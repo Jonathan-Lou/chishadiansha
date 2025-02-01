@@ -51,7 +51,7 @@ Page({
 
   async createMenu(name) {
     console.log('createMenu--name',name);
-    const openid = getOpenId();
+    const openid = await getOpenId();
     console.log('openid',openid);
     const result = await wx.cloud.callFunction({
       name:'quickstartFunctions',
@@ -63,7 +63,6 @@ Page({
 
   createDish() {
     const menuId = this.data.menuId;
-    console.log('createDish-menuId',menuId);
     wx.navigateTo({
       url: `/pages/createDish/index?menuId=${menuId}`,
     })

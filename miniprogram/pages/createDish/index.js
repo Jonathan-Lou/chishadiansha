@@ -9,18 +9,24 @@ import { getOpenId } from '../../common/index';
 
 Page({
   data: {
-    knowledgePoints: QuickStartPoints,
-    steps: QuickStartSteps,
-    photoSrc: '',
-    menuData:[],
-    menuId:''
-
+    showEditDish: true,
+    modalType: 'add',
+    menuId: ''
   },
-  async onLoad(e) {
-    console.log('eeeeee',e);
+
+  onLoad(e) {
     const menuId = e.menuId;
-    this.setData({menuId})
-   
+    this.setData({ menuId });
+  },
+
+  onEditDishClose() {
+    wx.navigateBack();
+  },
+
+  onEditDishSuccess() {
+    const app = getApp();
+    app.globalData.menuOnShow = true;
+    wx.navigateBack();
   },
 
   onShow(e) {
@@ -63,41 +69,46 @@ Page({
     });
   },
   async formSubmit(e) {
-    console.log('eee', e);
-    const {name,type} = e.detail.value;
+    const {name, type, remark} = e.detail.value;
     if(!this.data.photoSrc) {
       wx.showToast({
         title: '照片未上传',
         icon:'error'
       });
-    return;
+      return;
     };
-    if(!name || !type ) {
+    if(!name || !type) {
       wx.showToast({
         title: '菜品名称/类型未填写',
         icon:'error'
       })
       return;
     }
-    const openid = getOpenId();
+    const openid = await getOpenId();
     const cloudPath = `${openid}/images/menu-${Date.now()}.png`
     wx.cloud.uploadFile({
-      cloudPath, // 上传至云端的路径
-      filePath: this.data.photoSrc, // 小程序临时文件路径
+      cloudPath,
+      filePath: this.data.photoSrc,
       success: async (res) => {
-        // 返回文件 ID
         const result = await wx.cloud.callFunction({
           name:'quickstartFunctions',
-          data:{ type: 'createDish',param:{menuId:this.data.menuId,name,type,img:res.fileID} }
+          data:{ 
+            type: 'createDish',
+            param:{
+              menuId: this.data.menuId,
+              name,
+              type,
+              remark,
+              img: res.fileID
+            } 
+          }
         });
-        console.log('result',result);
         const app = getApp();
-       app.globalData.menuOnShow = true;
+        app.globalData.menuOnShow = true;
         wx.navigateBack()
       },
       fail: console.error
     });
-
   }
 
 });

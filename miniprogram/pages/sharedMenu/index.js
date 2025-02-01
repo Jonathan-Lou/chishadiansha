@@ -1,6 +1,4 @@
-const {
-  envList
-} = require("../../envList");
+const { envList } = require('../../envList');
 import { getOpenId } from '../../common/index';
 import {
   submitOrder,
@@ -8,10 +6,9 @@ import {
   fetchSharedDishes,
   collectMenu,
   fetchUser,
-  fetchOpenId,
-  createUser
+  createUser,
 } from '../../fetch/index';
-import { userRegister } from '../../common/index'
+import { userRegister } from '../../common/index';
 
 Page({
   data: {
@@ -23,21 +20,21 @@ Page({
     customStyle: null,
     duration: 1000,
     orderList: [],
-    showMenu:true,
-    menuName:'',
-    isOrdered:false,
-    isOverlayVisible:false,
-    userInfo: null
+    showMenu: true,
+    menuName: '',
+    isOrdered: false,
+    isOverlayVisible: false,
+    userInfo: null,
+    isSubmitting: false,
   },
-  sharedId:'',
-  menuId:'',
+  sharedId: '',
+  menuId: '',
 
   async fetchMenuList() {
     const app = getApp();
     const openid = app.globalData.openid;
     const menuListData = await fetchMenuList(openid);
     return menuListData.result.data;
-
   },
 
   async fetchData(id) {
@@ -56,33 +53,35 @@ Page({
     console.log('menuMap', menuMap);
     this.setData({
       menuData: menuMap,
-      typeList
-    })
+      typeList,
+    });
   },
 
   async onLoad(options) {
     try {
       // 先获取用户信息
       const openid = await getOpenId();
+      console.log('openid====', openid);
       const userRes = await fetchUser(openid);
-      
+      console.log('userRes====', userRes);
+
       if (!userRes?.result) {
         // 用户未注册，弹出注册框
         wx.showModal({
           title: '请输入用户名',
           editable: true,
           placeholderText: '请输入您的名字',
-          success: async (res) => {
+          success: async res => {
             if (res.confirm) {
               if (!res.content) {
                 wx.showToast({
                   title: '用户名不能为空',
-                  icon: 'error'
+                  icon: 'error',
                 });
                 wx.navigateBack();
                 return;
               }
-              
+
               // 注册用户
               const registerRes = await wx.cloud.callFunction({
                 name: 'quickstartFunctions',
@@ -90,27 +89,27 @@ Page({
                   type: 'createUser',
                   param: {
                     openid,
-                    userName: res.content
-                  }
-                }
+                    userName: res.content,
+                  },
+                },
               });
-              
+
               this.setData({
-                userInfo: registerRes.result
+                userInfo: registerRes.result,
               });
-              
+
               // 注册成功后继续加载菜单数据
               this.loadMenuData(options);
             } else {
               // 用户取消注册，返回上一页
               wx.navigateBack();
             }
-          }
+          },
         });
       } else {
         // 用户已注册，直接设置用户信息并加载菜单
         this.setData({
-          userInfo: userRes.result.data
+          userInfo: userRes.result.data,
         });
         this.loadMenuData(options);
       }
@@ -118,7 +117,7 @@ Page({
       console.error('获取用户信息失败:', err);
       wx.showToast({
         title: '获取用户信息失败',
-        icon: 'error'
+        icon: 'error',
       });
       wx.navigateBack();
     }
@@ -134,9 +133,9 @@ Page({
   },
 
   async render(menuId) {
-    console.log('menuIdmenuId',menuId);
+    console.log('menuIdmenuId', menuId);
     const dishData = await fetchDishes(menuId);
-    console.log('dishData',dishData);
+    console.log('dishData', dishData);
     const dishes = dishData.result;
     const menuMap = {};
     dishes?.forEach(item => {
@@ -147,15 +146,12 @@ Page({
       menuMap[type].push(item);
     });
     const typeList = Object.keys(menuMap);
-    console.log('menuMapmenuMap',menuMap);
-    this.setData({menuData:menuMap,typeList})
+    console.log('menuMapmenuMap', menuMap);
+    this.setData({ menuData: menuMap, typeList });
   },
 
   add(e) {
-    const {
-      id,
-      type
-    } = e.currentTarget.dataset;
+    const { id, type } = e.currentTarget.dataset;
     const menuData = this.data.menuData;
     const dataList = menuData[type];
     const item = dataList.find(item => item.name == id);
@@ -163,7 +159,7 @@ Page({
       item.count = 1;
     } else {
       item.count++;
-    };
+    }
     const addName = item.name;
     const orderList = this.data.orderList;
     if (!orderList.some(item => item.name === addName)) {
@@ -171,15 +167,12 @@ Page({
     }
     this.setData({
       menuData,
-      orderList
-    })
+      orderList,
+    });
   },
 
   minus(e) {
-    const {
-      id,
-      type
-    } = e.currentTarget.dataset;
+    const { id, type } = e.currentTarget.dataset;
     const menuData = this.data.menuData;
     const dataList = menuData[type];
     const item = dataList.find(item => item.name == id);
@@ -191,71 +184,96 @@ Page({
     let orderList = this.data.orderList;
     if (!item.count) {
       const deleteName = item.name;
-      orderList = orderList.filter(item => item.name !== deleteName)
+      orderList = orderList.filter(item => item.name !== deleteName);
     }
     this.setData({
       menuData,
-      orderList
-    })
-
+      orderList,
+    });
   },
 
   closeModal() {
-    this.setData({show:false})
+    this.setData({ show: false });
   },
   updateOrderList(e) {
-    const  orderList  = e.detail;
-    console.log('orderList',orderList);
-    this.setData({orderList})
+    const orderList = e.detail;
+    console.log('orderList', orderList);
+    this.setData({ orderList });
   },
   updateMenuData(e) {
-    const  menuData  = e.detail;
-    console.log('menuData',menuData);
-    this.setData({menuData})
+    const menuData = e.detail;
+    console.log('menuData', menuData);
+    this.setData({ menuData });
   },
   async submitOrder() {
-    const openId =  getOpenId();
-    console.log('orderList2',this.data.orderList);
-    const dishes = this.data.orderList?.map(item => {return {img:item.img,name:item.name,type:item.type,count:item.count}})
-   const result = await submitOrder(this.sharedId,dishes,openId);
-   this.setData({isOrdered:true})
-   console.log('result',result);
+    if (this.data.isSubmitting) {
+      return;
+    }
+
+    try {
+      this.setData({ isSubmitting: true });
+      wx.showLoading({ title: '提交中' });
+
+      const openid = await getOpenId();
+      const result = await submitOrder(openid, this.menuId, this.data.orderList);
+      
+      if (result.result) {
+        wx.showToast({
+          title: '提交成功',
+          icon: 'success',
+          success: () => {
+            this.setData({
+              isOrdered: true
+            });
+          }
+        });
+      } else {
+        wx.showToast({
+          title: '提交失败',
+          icon: 'error'
+        });
+      }
+    } catch (err) {
+      console.error('提交订单失败:', err);
+      wx.showToast({
+        title: '提交失败',
+        icon: 'error'
+      });
+    } finally {
+      wx.hideLoading();
+      this.setData({ isSubmitting: false });
+    }
   },
 
   popup() {
     this.setData({
-      isOverlayVisible:true
+      isOverlayVisible: true,
     });
-
   },
   hideOverlay() {
     this.setData({
-      isOverlayVisible:false
+      isOverlayVisible: false,
     });
   },
   async collect() {
-    const openId =  getOpenId();
+    const openId =await getOpenId();
     const isRegisteredData = await fetchUser(openId);
     const isUser = isRegisteredData.result;
-    if(isUser) {
-    const data  = await collectMenu(openId,this.menuId,this.menuName);
-    console.log('data--',data);
-    if(data.result) {
-      wx.showToast({
-        title: '收藏成功！',
-      })
-    } else {
-      wx.showToast({
-        title: '请稍后重试',
-        icon:'error'
-      })
-    }
-
+    if (isUser) {
+      const data = await collectMenu(openId, this.menuId, this.menuName);
+      console.log('data--', data);
+      if (data.result) {
+        wx.showToast({
+          title: '收藏成功！',
+        });
+      } else {
+        wx.showToast({
+          title: '请稍后重试',
+          icon: 'error',
+        });
+      }
     } else {
       userRegister(openId);
-
     }
-
-  }
-
+  },
 });

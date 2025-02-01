@@ -15,7 +15,7 @@ Page({
     collectMenu:null
   },
   async onLoad() {
-    const openId = getOpenId();
+    const openId = await getOpenId();
     console.log('openId',openId);
     const user = await fetchUser(openId);
     if(!user.result) {

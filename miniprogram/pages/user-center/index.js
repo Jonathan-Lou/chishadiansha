@@ -16,7 +16,7 @@ Page({
     wx.showLoading({
       title: '',
     });
-    const openId = getOpenId();
+    const openId = await getOpenId();
     const user = await fetchUser(openId);
     wx.hideLoading();
     // 如果用户id不存在，说明没有注册

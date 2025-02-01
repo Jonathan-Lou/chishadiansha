@@ -167,7 +167,7 @@ Page({
   async submitOrder() {
     console.log('orderList2',this.data.orderList);
     const orderId = this.menuId + new Date().getTime();
-    const openId =  getOpenId();
+    const openId =  await getOpenId();
 
     const res = await createOrder(orderId,this.data.orderList,openId);
     wx.navigateTo({
@@ -187,7 +187,7 @@ Page({
     });
   },
   async collect() {
-    const openId =  getOpenId();
+    const openId =  await getOpenId();
     const isRegisteredData = await fetchUser(openId);
     const isUser = isRegisteredData.result;
     if(isUser) {

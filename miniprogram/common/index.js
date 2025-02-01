@@ -1,9 +1,15 @@
 
-const { createUser } =require('../fetch/index')
-const getOpenId = () => {
+const { createUser, fetchOpenId } =require('../fetch/index')
+const getOpenId = async () => {
   const app = getApp();
-  console.log('app',app);
-  const openid = app.globalData.openid;
+  let openid = app.globalData.openid;
+  
+  if (!openid) {
+    // 如果全局没有 openid，主动获取
+    openid = await fetchOpenId();
+    app.globalData.openid = openid;
+  }
+  
   return openid;
 };
 
