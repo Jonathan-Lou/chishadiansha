@@ -10,7 +10,7 @@
             {{item.name}}
           </view>
           <view class="orderItemDesc">
-            这是备注
+            {{ item.remark || '暂无备注'}}
           </view>
         </view>
         <view class="orderItemCount">x{{item.count}}</view>
@@ -35,7 +35,7 @@
               {{item.name}}
             </view>
             <view class="orderItemDesc">
-              这是备注
+            {{ item.remark || '暂无备注'}}
             </view>
           </view>
         </view>

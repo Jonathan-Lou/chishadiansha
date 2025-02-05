@@ -125,10 +125,34 @@ Page({
 
   // 封装加载菜单数据的方法
   async loadMenuData(options) {
-    // 将原来 onLoad 中的菜单加载逻辑移到这里
-    const { menuId, menuName } = options;
+    const { menuId, menuName, sharedId } = options;
+    this.sharedId = sharedId;
     this.menuId = menuId;
     this.menuName = menuName;
+
+    // 如果有 sharedId，先检查是否已经下单
+    if (sharedId) {
+      try {
+        const sharedDishesData = await fetchSharedDishes(sharedId);
+        console.log('sharedDishesData', sharedDishesData);
+        const dishes = sharedDishesData.result.dishes;
+        if (dishes?.length > 0) {
+          this.setData({
+            isOrdered: true,
+            orderList: dishes,
+            menuName,
+          });
+          return;
+        }
+      } catch (err) {
+        console.error('获取已点菜品失败:', err);
+        wx.showToast({
+          title: '获取菜品失败',
+          icon: 'error',
+        });
+      }
+    }
+
     await this.render(menuId);
   },
 
@@ -213,31 +237,32 @@ Page({
     try {
       this.setData({ isSubmitting: true });
       wx.showLoading({ title: '提交中' });
+      console.log('orderListorderList===', this.data.orderList);
 
       const openid = await getOpenId();
-      const result = await submitOrder(openid, this.menuId, this.data.orderList);
-      
+      const result = await submitOrder(this.sharedId, this.data.orderList,openid);
+
       if (result.result) {
         wx.showToast({
           title: '提交成功',
           icon: 'success',
           success: () => {
             this.setData({
-              isOrdered: true
+              isOrdered: true,
             });
-          }
+          },
         });
       } else {
         wx.showToast({
           title: '提交失败',
-          icon: 'error'
+          icon: 'error',
         });
       }
     } catch (err) {
       console.error('提交订单失败:', err);
       wx.showToast({
         title: '提交失败',
-        icon: 'error'
+        icon: 'error',
       });
     } finally {
       wx.hideLoading();
@@ -256,7 +281,7 @@ Page({
     });
   },
   async collect() {
-    const openId =await getOpenId();
+    const openId = await getOpenId();
     const isRegisteredData = await fetchUser(openId);
     const isUser = isRegisteredData.result;
     if (isUser) {
