@@ -1,7 +1,21 @@
 /**index.wxss**/
 .container {
-  height: 100vh;
+  overflow: hidden;
 }
+
+.menuContainer {
+  height: calc(100vh - 228rpx);
+  overflow: hidden; 
+}
+.title {
+  box-sizing: border-box;
+  height: 60rpx;
+  padding: 0 20rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
 .banner {
   height:300rpx;
   line-height:300rpx;
@@ -11,10 +25,6 @@
   margin-top: 12rpx;
   width:fit-content;
   border: 1rpx solid #333;
-}
-
-.menuComponentContainer {
-  width:100%;
 }
 
 .addBtn {
@@ -27,4 +37,43 @@
 
 .submitBtn {
   margin-top: 60rpx;
+}
+
+.actions {
+  margin-left: 180rpx;
+  display: flex;
+}
+
+.actions button {
+  margin: 0 10rpx;
+  height: 76rpx;
+  width: 226rpx !important;
+  border-radius: 38rpx;
+  color:#fff;
+  background-color: #ff8c00 !important;
+}
+
+.footer {
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height:168rpx;
+  padding: 30rpx 20rpx 50rpx 20rpx;
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.share-btn, .finish-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45%;
+  border-radius: 38rpx;
+  color:#fff;
+  background-color: #ff8c00 !important;
+  font-size: 32rpx;
 }

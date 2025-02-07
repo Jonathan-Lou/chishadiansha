@@ -2,7 +2,11 @@
 <view class="container">
   <view wx:if="{{isOrdered}}">
     <view class="orderList">
-      <view class="orderListTitle">已选菜品({{orderList.length}})</view>
+      <view class="orderedUser" wx:if="{{orderedUser}}">{{orderedUser}}已完成点单～</view>
+      <view class="orderHeader">
+        <view class="orderListTitle">已选菜品({{orderList.length}})</view>
+      </view>
+      <view class="orders">
       <view class="orderItem" wx:for="{{orderList}}" wx:for-item="item" wx:key="{{item.name}}">
         <image class="orderItemImg" src="{{item.img}}"></image>
         <view class="orderItemContent">
@@ -16,15 +20,17 @@
         <view class="orderItemCount">x{{item.count}}</view>
       </view>
     </view>
-  </view>
-  <view wx:else>
-    <view class="top">
-      <view class="menuName">菜单名称</view>
-      <view class="collect" bind:tap="collect">
-        <image class="collectIcon" mode="scaleToFill" src="cloud://chishane-2gsirlz919069514.6368-chishane-2gsirlz919069514-1308342340/pic/Union.png"></image>收藏
-      </view>
     </view>
-    <menu-component menuData="{{menuData}}" typeList="{{typeList}}" activeIndex="{{activeIndex}}" orderList="{{orderList}}" type="share" bind:updateOrderList="updateOrderList" bind:updateMenuData="updateMenuData"></menu-component>
+  </view>
+  <view wx:else class="orderContainer">
+    <view class="top">
+      <view class="menuName">菜单名称:{{ menuName }}</view>
+      <view class="collect" bind:tap="collect" wx:if="{{!isCollected}}">
+        <image class="collectIcon" mode="scaleToFill" src="cloud://chishadiansha-ppe-3ems5xeb1803ad.6368-chishadiansha-ppe-3ems5xeb1803ad-1308342340/pic/collect.png"></image>收藏
+      </view>
+      <view wx:else>已收藏</view>
+    </view>
+    <menu-component class="menuContainer" menuData="{{menuData}}" typeList="{{typeList}}" activeIndex="{{activeIndex}}" orderList="{{orderList}}" type="share" bind:updateOrderList="updateOrderList" bind:updateMenuData="updateMenuData"></menu-component>
     <view class="overlay" wx:if="{{isOverlayVisible}}" bindtap="hideOverlay">
       <view class="orderListModal">
         <view class="orderListTitle">已选菜品({{orderList.length}})</view>

@@ -4,7 +4,6 @@
     "pages/sharedMenu/index",
     "pages/createDish/index",
     "pages/orderList/index",
-    "pages/createMenu/index",
     "pages/menuList/index",
     "pages/order/index",
     "pages/orderDetail/index",

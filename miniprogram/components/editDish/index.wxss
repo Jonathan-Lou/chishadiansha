@@ -20,7 +20,6 @@ page {
 
 .takePhoto {
   color: #fff;
-  background-color: #382600;
 }
 
 .photo {
@@ -30,9 +29,8 @@ page {
   height:192rpx;
   width:192rpx;
   font-size: 28rpx;
-  border-radius: 6rpx;
-  background:#ccc;
   text-align: center;
+  background-color: #ff8c00 !important;
 }
 
 .photoImg {
@@ -143,7 +141,7 @@ page {
 .submit-btn {
   width: 100% !important;
   margin-top: 40rpx;
-  background: #382600 !important;
+  background: #ff8c00 !important;
   color: #fff;
   border-radius: 44rpx;
 }

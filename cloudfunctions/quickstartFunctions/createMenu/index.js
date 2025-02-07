@@ -8,7 +8,7 @@ exports.main = async (event, context) => {
   const param = event.param;
   const {
     menuName,
-    openid
+    openid,
   } = param;
   const menuId = openid + menuName
  

@@ -1,15 +1,21 @@
 <!--index.wxml-->
 <view class="container">
-  <button class="addBtn" bind:tap="showAddDishModal">添加菜品</button>
+  <view class="title">正在创建: {{menuName}}</view>
+  <view class="menuContainer">
   <menu-component 
-    class="menuComponentContainer" 
     menuData="{{menuData}}" 
     typeList="{{typeList}}" 
     type="edit" 
     bind:editDish="showEditDishModal"
     bind:updateMenuData="updateMenuData"
+    bind:showAddDishModal="showAddDishModal"
   />
-  <button class="finishBtn" bind:tap="finish">完成</button>
+  </view>
+  <view class="footer">
+    <button class="share-btn" bindtap="share" open-type="share">分享菜单</button>
+    <button class="finish-btn" bindtap="finish">完成</button>
+  </view>
+
   <dish-modal
     visible="{{showEditDish}}"
     dishData="{{currentDish}}"

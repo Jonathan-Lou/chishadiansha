@@ -9,7 +9,7 @@
         {
           "name": "pages/sharedMenu/index?sharedId=test",
           "pathName": "pages/sharedMenu/index",
-          "query": "menuId=omutz5TliPp3iTzITqyQj4zmGsKU我的菜单&sharedId=omutz5T5tYcji801G0unZGUixxMI我的菜单21738421109827",
+          "query": "menuId=omutz5TliPp3iTzITqyQj4zmGsKU我的菜单&sharedId=omutz5T5tYcji801G0unZGUixxMI我的菜单21738421109827&menuName=aaa",
           "launchMode": "default",
           "scene": null
         },

@@ -1,28 +1,30 @@
 <!-- pages/me/index.wxml -->
 <view class="page_container">
-  <view class="top_bg" />
+  <view class="top_bg"></view>
   <view class="main_content">
-    <view class="userinfo_container">
-      <image class="avatar" src="../../images/icons/avatar.png" mode="widthFix" />
-      <block wx:if="{{ !username }}">
-        <view class="username" bind:tap="getUserInfo">请点击登录</view>
-      </block>
-      <block wx:else>
-        <view class="username">用户: {{ username }}</view>
-      </block>
-    </view>
-    <view class="settings_container">
-      <view class="setting_item">
-        <view class="left">
-          <image class="setting_icon" src="../../images/icons/customer-service.svg" />
-          <!-- <view class="setting_text">联系客服</view> -->
-          <button open-type="contact" class="contact-button">
-            联系客服
-          </button>
+    <block wx:if="{{isLoading}}">
+      <view class="loading">加载中...</view>
+    </block>
+    <block wx:else>
+      <view class="userinfo_container">
+        <view class="avatar">
+          <open-data type="userAvatarUrl" wx:if="{{isAuthorized}}"></open-data>
+          <button wx:else open-type="getUserInfo" bind:getUserInfo="onGetUserInfo">授权获取头像</button>
         </view>
-        <image class="arrow_icon" src="../../images/arrow.svg" />
+        <view class="username">{{username}}</view>
       </view>
-    </view>
+      <view class="settings_container">
+        <view class="setting_item">
+          <view class="left">
+            <image class="setting_icon" src="../../images/icons/customer-service.svg" />
+            <button open-type="contact" class="contact-button">
+              联系客服
+            </button>
+          </view>
+          <image class="arrow_icon" src="../../images/arrow.svg" />
+        </view>
+      </view>
+    </block>
   </view>
   <cloud-tip-modal showUploadTipProps="{{showUploadTip}}" />
 </view>

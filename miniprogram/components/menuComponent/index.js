@@ -12,6 +12,7 @@ Component({
     type:String,
     updateMenuData:Function,
     updateOrderList:Function,
+    showAddDishModal:Function
   },
   lifetimes: {
     attached: function () {
@@ -97,6 +98,9 @@ Component({
       // wx.navigateTo({
       //   url: `/pages/editDish/index?dishId=${dishId}`,
       // })
+    },
+    showAddDishModal() {
+      this.triggerEvent('showAddDishModal'); 
     },
     async delete(e) {
       wx.showModal({

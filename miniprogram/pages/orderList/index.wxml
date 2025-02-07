@@ -1,5 +1,8 @@
 <view class="container">
-  <view>
+  <view wx:if="{{isLoading}}" class="loading">
+    加载中...
+  </view>
+  <view wx:else>
     <view wx:for="{{orderList}}" wx:item="item" class="orderItem" data-order-id="{{item.orderId}}" data-type="{{item.type}}" data-shared-id="{{item.sharedId}}" bind:tap="goToDetail">
       <view wx:if="{{item.type === 'shared'}}">
         <view>订单类型:分享订单</view>
@@ -11,8 +14,6 @@
         <view>订单编号:{{item.orderId}}</view>
         <view>订单创建时间:{{item.createTime}}</view>
       </view>
-
     </view>
-
   </view>
 </view>

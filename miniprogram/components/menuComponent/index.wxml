@@ -5,7 +5,7 @@
         </view>
       </view>
       <view class="menu-right">
-        <view class="typeName">{{typeList[activeIndex]}}</view>
+        <view class="typeName" wx:if="{{!!typeList[activeIndex]}}">{{typeList[activeIndex]}}</view>
         <view class="menu-right-item" wx:for="{{menuData[typeList[activeIndex]]}}" wx:for-item="item">
           <image class="menu-right-img" mode="aspectFill" src="{{item.img}}"></image>
           <view class="menu-right-item-content">
@@ -28,7 +28,10 @@
             <button class="edit" size="mini" plain bind:tap="edit" data-dish="{{item}}">编辑</button>
             <button class="delete" size="mini" plain bind:tap="delete" data-dish-id="{{item.dishId}}">删除</button>
           </view>
+          
 
         </view>
+        <button wx:if="{{type !== 'share'}}" class="addBtn" bind:tap="showAddDishModal">添加菜品</button>
+
       </view>
     </view>

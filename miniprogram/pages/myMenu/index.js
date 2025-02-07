@@ -99,8 +99,9 @@ Page({
                 icon:'success',
                 success: () => {
                   setTimeout(() => {
+                    const menuId = openid + menuName;
                     wx.navigateTo({
-                      url: `/pages/createMenu/index?menuName=${menuName}`,
+                      url: `/pages/editMenu/index?menuName=${menuName}&modalType=add&menuId=${menuId}`,
                     })
                   },1000)
                
@@ -117,14 +118,13 @@ Page({
         }
       }
     })
-    // wx.navigateTo({
-    //   url: '/pages/createMenu/index',
-    // })
+
   },
   edit(e) {
-    const menuId = e.currentTarget.dataset.menuId;
+    console.log('eeeeeee',e)
+    const { menuId,menuName} = e.currentTarget.dataset;
     wx.navigateTo({
-      url: `/pages/editMenu/index?menuId=${menuId}`,
+      url: `/pages/editMenu/index?menuId=${menuId}&menuName=${menuName}`,
     })
   },
 

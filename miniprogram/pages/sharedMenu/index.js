@@ -7,6 +7,7 @@ import {
   collectMenu,
   fetchUser,
   createUser,
+  fetchMenuList,
 } from '../../fetch/index';
 import { userRegister } from '../../common/index';
 
@@ -26,6 +27,7 @@ Page({
     isOverlayVisible: false,
     userInfo: null,
     isSubmitting: false,
+    isCollected: false,
   },
   sharedId: '',
   menuId: '',
@@ -59,6 +61,8 @@ Page({
 
   async onLoad(options) {
     try {
+      console.log('options====',options);
+      
       // 先获取用户信息
       const openid = await getOpenId();
       console.log('openid====', openid);
@@ -113,6 +117,9 @@ Page({
         });
         this.loadMenuData(options);
       }
+
+      // 检查用户是否已收藏
+      await this.checkIfCollected(openid, options.menuId);
     } catch (err) {
       console.error('获取用户信息失败:', err);
       wx.showToast({
@@ -121,6 +128,15 @@ Page({
       });
       wx.navigateBack();
     }
+  },
+
+  async checkIfCollected(openid, menuId) {
+    const collectionData = await fetchMenuList(openid);
+    const collectedMenus = collectionData.result.data;
+
+    // 检查当前菜单是否在已收藏列表中
+    const isCollected = collectedMenus.some(menu => menu.menuId === menuId);
+    this.setData({ isCollected });
   },
 
   // 封装加载菜单数据的方法
@@ -136,19 +152,27 @@ Page({
         const sharedDishesData = await fetchSharedDishes(sharedId);
         console.log('sharedDishesData', sharedDishesData);
         const dishes = sharedDishesData.result.dishes;
+        const orderedUser = sharedDishesData.result.userName; // 获取下单用户名
         if (dishes?.length > 0) {
           this.setData({
             isOrdered: true,
             orderList: dishes,
             menuName,
+            orderedUser // 保存下单用户名
           });
           return;
+        } else { 
+          this.setData({
+          menuName,
+          orderedUser // 保存下单用户名
+        });
+
         }
       } catch (err) {
         console.error('获取已点菜品失败:', err);
         wx.showToast({
           title: '获取菜品失败',
-          icon: 'error',
+          icon: 'error'
         });
       }
     }
@@ -240,7 +264,10 @@ Page({
       console.log('orderListorderList===', this.data.orderList);
 
       const openid = await getOpenId();
-      const result = await submitOrder(this.sharedId, this.data.orderList,openid);
+      // 获取当前用户名
+      const userName = this.data.userInfo.userName;
+      console.log('userName==',userName)
+      const result = await submitOrder(this.sharedId, this.data.orderList, openid, userName);
 
       if (result.result) {
         wx.showToast({
@@ -249,6 +276,7 @@ Page({
           success: () => {
             this.setData({
               isOrdered: true,
+              orderedUser: userName // 设置当前用户为点单人
             });
           },
         });
@@ -282,23 +310,17 @@ Page({
   },
   async collect() {
     const openId = await getOpenId();
-    const isRegisteredData = await fetchUser(openId);
-    const isUser = isRegisteredData.result;
-    if (isUser) {
-      const data = await collectMenu(openId, this.menuId, this.menuName);
-      console.log('data--', data);
-      if (data.result) {
-        wx.showToast({
-          title: '收藏成功！',
-        });
-      } else {
-        wx.showToast({
-          title: '请稍后重试',
-          icon: 'error',
-        });
-      }
+    const data = await collectMenu(openId, this.menuId, this.menuName);
+    if (data.result) {
+      wx.showToast({
+        title: '收藏成功！',
+      });
+      this.setData({ isCollected: true }); // 更新收藏状态
     } else {
-      userRegister(openId);
+      wx.showToast({
+        title: '请稍后重试',
+        icon: 'error',
+      });
     }
   },
 });

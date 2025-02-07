@@ -5,6 +5,7 @@ const db = cloud.database();
 exports.main = async (event, context) => {
   const param = event.param;
   const { menuId } = param;
+  console.log('fetchDishes--menuId',menuId);
   const result =  await db.collection('dishes').where({menuId}).get().then( res => {
     return res;
   });

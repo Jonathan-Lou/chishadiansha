@@ -8,7 +8,8 @@ import { formatDate } from '../../common/utils';
 
 Page({
   data: {
-    orderList: []
+    orderList: [],
+    isLoading: true
   },
 
   async onLoad() {
@@ -16,7 +17,7 @@ Page({
     const openId = await getOpenId();
     const orderListRes = await fetchOrderList(openId);
     console.log('orderListRes',orderListRes);
-    const orderList = orderListRes?.result?.data;
+    const orderList = orderListRes?.result?.data || [];
     orderList.map(item => {
       const {createTime} = item;
       if(createTime) {
@@ -24,7 +25,8 @@ Page({
       };
     })
     this.setData({
-      orderList
+      orderList,
+      isLoading: false
     })
 
   },

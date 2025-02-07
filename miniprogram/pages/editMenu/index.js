@@ -2,7 +2,7 @@ const {
   envList
 } = require("../../envList");
 import { getOpenId } from '../../common/index';
-import { fetchDishes } from '../../fetch/index';
+import { fetchDishes,createSharedMenu } from '../../fetch/index';
 
 Page({
   data: {
@@ -11,19 +11,18 @@ Page({
     typeList:[],
     showEditDish: false,
     currentDish: null,
-    modalType: '' // 'add' 或 'edit'
+    modalType: '', // 'add' 或 'edit'
+    menuId: '',
   },
 
   onLoad(e) {
-    console.log('eee',e);
-    const menuId = e.menuId;
-    // 第一次进入页面时就保存openId
-    this.setData({menuId})
+    const { menuId, menuName, modalType } = e;
+    this.setData({ menuId, menuName, modalType });
+    this.render(menuId);
   },
 
   async render(menuId) {
     const dishData = await fetchDishes(menuId);
-    console.log('dishDatadishData',dishData);
     const dishes = dishData.result;
     const menuMap = {};
     dishes?.forEach(item => {
@@ -34,7 +33,7 @@ Page({
       menuMap[type].push(item);
     });
     const typeList = Object.keys(menuMap);
-    this.setData({menuData:menuMap,typeList})
+    this.setData({ menuData: menuMap, typeList });
   },
 
   async onShow() {
@@ -50,15 +49,12 @@ Page({
   },
 
   async createMenu(name) {
-    console.log('createMenu--name',name);
     const openid = await getOpenId();
-    console.log('openid',openid);
     const result = await wx.cloud.callFunction({
-      name:'quickstartFunctions',
-      data:{ type: 'createMenu',param:{openid,menuName:name} }
+      name: 'quickstartFunctions',
+      data: { type: 'createMenu', param: { openid, menuName: name } }
     });
-    this.setData({menuName:name})
-    console.log('result',result);
+    this.setData({ menuName: name });
   },
 
   createDish() {
@@ -100,5 +96,25 @@ Page({
   onEditSuccess() {
     this.hideEditDishModal();
     this.render(this.data.menuId);
-  }
+  },
+  async share() {
+    const sharedMenuId = this.data.menuId;
+    const sharedId = sharedMenuId + Date.now();
+    const menuName = this.data.menuName;
+    this.sharedId = sharedId;
+    this.sharedMenuId = sharedMenuId;
+    this.menuName = menuName;
+    const result = await createSharedMenu(sharedId);
+    console.log('分享菜单创建结果:', result);
+  },
+
+  onShareAppMessage: function () {
+    if (!this.sharedId || !this.sharedMenuId) {
+      this.share();
+    }
+    return {
+      title: '吃啥点啥',
+      path: `/pages/sharedMenu/index?menuId=${this.sharedMenuId}&sharedId=${this.sharedId}&menuName=${this.menuName}`,
+    };
+  },
 });

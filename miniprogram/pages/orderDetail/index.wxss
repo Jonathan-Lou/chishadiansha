@@ -144,7 +144,6 @@
 
 .orderListTitle {
   padding: 16rpx 32rpx;
-  border-bottom: 1rpx solid #ccc;
 }
 .orderItem {
   position: relative;

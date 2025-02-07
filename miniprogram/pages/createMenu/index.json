@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "创建菜单",
-  "usingComponents": {
-    "menu-component": "/components/menuComponent/index",
-    "dish-modal": "/components/editDish/index"
-  },
-  "navigationBarBackgroundColor": "#fff"
-}

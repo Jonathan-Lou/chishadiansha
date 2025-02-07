@@ -10,7 +10,8 @@ exports.main = async (event, context) => {
   const {
     sharedId,
     dishes,
-    openId
+    openId,
+    userName
   } = param;
   return db.collection('sharedMenus').doc(sharedId).update({
     // data 字段表示需新增的 JSON 数据
@@ -29,7 +30,8 @@ exports.main = async (event, context) => {
           sharedId,
           dishes,
           openId,
-          type:'shared'
+          type:'shared',
+          userName
         }
       }
     })

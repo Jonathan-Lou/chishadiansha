@@ -54,7 +54,7 @@
   align-items: center;
   justify-content: center;
   margin: 12rpx 0 24rpx;
-  height:132rpx;
+  height:122rpx;
   width: calc(100% - 48rpx) !important;
   color: #fff !important;
   background-color:#382600 !important;
@@ -62,4 +62,11 @@
 .noMenus {
   margin-top: 20rpx;
   text-align: center;
+  color:#ccc;
+}
+
+.noCollection {
+  margin-top: 20rpx;
+  text-align: center;
+  color:#ccc;
 }

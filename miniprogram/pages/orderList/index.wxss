@@ -16,3 +16,10 @@ page {
   margin: 24rpx;
   background-color: antiquewhite;
 }
+
+.loading {
+  text-align: center;
+  padding: 50rpx;
+  font-size: 28rpx;
+  color: #999;
+}
